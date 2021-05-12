@@ -1,2 +1,2 @@
 # briathradan
-Code for the Briathradan wen interface
+Code for the Briathradan web interface
