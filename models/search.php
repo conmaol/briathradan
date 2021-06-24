@@ -12,7 +12,7 @@ class search {
   public function __construct() {
     if (isset($_GET["search"])) {
       $this->_search = $_GET["search"];
-      $this->_gd = $_GET["gd"]=='yes';
+      $this->_gd = $_SESSION["gd"]=='yes';
       $this->_db = isset($this->_db) ? $this->_db : new database();
       $this->_load();
     }

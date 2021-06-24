@@ -31,14 +31,14 @@ class search {
 				  <div class="form-check form-check-inline" data-toggle="tooltip" title="Enter English term">
 					  <input class="form-check-input" type="radio" name="gd" id="enRadio" value="no"
 HTML;
-    if (!$this->_model->getGd()) { echo ' checked>'; };
+    if ($_SESSION["gd"] != "yes") { echo ' checked>'; };
     echo <<<HTML
 					  <label class="form-check-label" for="enRadio">Beurla</label>
 				  </div>
 				  <div class="form-check form-check-inline" data-toggle="tooltip" title="Enter Gaelic term">
 					  <input class="form-check-input" type="radio" name="gd" id="gdRadio" value="yes"
 HTML;
-		if ($this->_model->getGd()) { echo ' checked>'; };
+		if ($_SESSION["gd"] == "yes") { echo ' checked>'; };
 		echo <<<HTML
 					  <label class="form-check-label" for="gdRadio">Gàidhlig</label>
 				  </div>
@@ -76,7 +76,7 @@ HTML;
     foreach ($entries as $nextEntry) {
 	    $url = '?m=entry&mhw=' . $nextEntry[0] . '&mpos=' . $nextEntry[1] . '&msub=' . $nextEntry[2];
 	    echo '<a href="' . $url . '" class="list-group-item list-group-item-action"><strong>';
-			if ($this->_model->getGd()) {
+			if ($_SESSION["gd"] == "yes") {
 				echo search::_hi($nextEntry[0],$search);
 			}
 			else {

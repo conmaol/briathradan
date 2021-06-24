@@ -2,6 +2,8 @@
 
 namespace controllers;
 
+session_start();
+
 //ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 define("DB", "briathradan");
 define("DB_HOST", "130.209.99.241");
@@ -13,6 +15,8 @@ spl_autoload_register();
 
 $module = isset($_GET["m"]) ? $_GET["m"] : "";
 $action = isset($_GET["a"]) ? $_GET["a"] : "";
+
+$_SESSION["gd"] = $_GET["gd"] ? $_GET["gd"] : "no";
 
 echo <<<HTML
 <!doctype html>
