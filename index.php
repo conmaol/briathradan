@@ -46,7 +46,7 @@ HTML;
 echo <<<HTML
 </head>
 <body style="padding-top: 20px; padding-bottom: 100px;">
-  <div class="container-fluid">     <h1>{$_SESSION["gd"]}</h1>
+  <div class="container-fluid">
 HTML;
 
 switch ($module) {
