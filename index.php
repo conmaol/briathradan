@@ -16,7 +16,12 @@ spl_autoload_register();
 $module = isset($_GET["m"]) ? $_GET["m"] : "";
 $action = isset($_GET["a"]) ? $_GET["a"] : "";
 
-$_SESSION["gd"] = $_GET["gd"] ? $_GET["gd"] : "no";
+if ($_GET["gd"]) {
+	$_SESSION["gd"] = $_GET["gd"];
+}
+if (empty($_SESSION["gd"])) {
+	$_SESSION["gd"] = "no";
+}
 
 echo <<<HTML
 <!doctype html>
@@ -41,7 +46,7 @@ HTML;
 echo <<<HTML
 </head>
 <body style="padding-top: 20px; padding-bottom: 100px;">
-  <div class="container-fluid">
+  <div class="container-fluid">     <h1>{$_SESSION["gd"]}</h1>
 HTML;
 
 switch ($module) {
