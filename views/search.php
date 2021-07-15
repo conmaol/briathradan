@@ -14,7 +14,7 @@ class search {
 	public function show() {
 		$search = $this->_model->getSearch();
 		if (!$search) {
-			$search = "dog";
+			$search = "explosive";
 		}
     echo <<<HTML
       <form action="#" method="get" autocomplete="off" id="searchForm">
@@ -77,7 +77,7 @@ HTML;
 	    $url = '?m=entry&mhw=' . $nextEntry[0] . '&mpos=' . $nextEntry[1] . '&msub=' . $nextEntry[2];
 
 	    echo <<<HTML
-				<a href="#" class="list-group-item list-group-item-action" 
+				<a href="#" class="list-group-item list-group-item-action"
 					data-toggle="modal" data-target="#entryModal"
 					data-mhw="{$nextEntry[0]}" data-mpos="{$nextEntry[1]}" data-msub="{$nextEntry[2]}">
 					<strong>
@@ -138,16 +138,16 @@ HTML;
 				  /**
 				  * Populate the modal based on click from search result
 					*/
-				  $('#entryModal').on('show.bs.modal', function (event) { 
+				  $('#entryModal').on('show.bs.modal', function (event) {
             let entryLink = $(event.relatedTarget);
 				    let mhw = entryLink.attr('data-mhw');
 				    let mpos = entryLink.attr('data-mpos');
 				    let msub = entryLink.attr('data-msub');
 				    writeEntry(mhw, mpos, msub);
 				  });
-				  
+
 				  /**
-				  * Populate the modal based on click from modal content 
+				  * Populate the modal based on click from modal content
 					*/
 				  $(document).on('click', '.entryRow', function () {
 				    let mhw = $(this).attr('data-mhw');
@@ -156,11 +156,11 @@ HTML;
 				    writeEntry(mhw, mpos, msub);
 				  });
 				});
-				
+
 				function writeEntry(mhw, mpos, msub) {
 				  let modal = $('#entryModal');
 				  $.getJSON('ajax.php?action=getEntry&mhw='+mhw+'&mpos='+mpos+'&msub='+msub, function (data) {
-							modal.find('.modal-body').html(data.html);				    
+							modal.find('.modal-content').html(data.html);
 				    });
 				}
 			</script>

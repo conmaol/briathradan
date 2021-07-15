@@ -16,8 +16,11 @@ class entry {
 	}
 
   private function _writeInfo() {
-		$html = '<h1>' . $this->_model->getMhw() . '</h1>';
-		$html .= '<p><em class="text-muted" data-toggle="tooltip" title="' . models\entry::getPosInfo($this->_model->getMpos())[2] . '">' . models\entry::getPosInfo($this->_model->getMpos())[1] . '</em></p>';
+		$html = '<div class="modal-header">';
+		$html .= '<h2>' . $this->_model->getMhw() . '</h2>';
+		$html .= '<em class="text-muted" data-toggle="tooltip" title="' . models\entry::getPosInfo($this->_model->getMpos())[2] . '">' . models\entry::getPosInfo($this->_model->getMpos())[1] . '</em>';
+		$html .= '</div>';
+		$html .= '<div class="modal-body">';
 		$ps = $this->_model->getParts();
     if ($ps) {
 		  $html .= '<p>↗️ ';
@@ -45,7 +48,7 @@ HTML;
 			$html .= '<p>↘️ ';
 			foreach ($cs as $nextCompound) {
 				$html .= <<<HTML
-			  <a href="#" class="entryRow" 
+			  <a href="#" class="entryRow"
 					data-mhw="{$nextCompound[0]}" data-mpos="{$nextCompound[1]}" data-msub="{$nextCompound[2]}">
 					{$nextCompound[0]}
 				</a>
@@ -55,6 +58,12 @@ HTML;
 			}
 			$html .= '</p>';
 		}
+		$html .= '</div>';
+    $html .= <<<HTML
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">dùin</button>
+		</div>
+HTML;
 		return $html;
 	}
 
