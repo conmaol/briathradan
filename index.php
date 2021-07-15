@@ -2,16 +2,7 @@
 
 namespace controllers;
 
-session_start();
-
-//ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
-define("DB", "briathradan");
-define("DB_HOST", "130.209.99.241");
-define("DB_USER", "corpas");
-define("DB_PASSWORD", "XmlCraobh2020");
-//autoload classes
-spl_autoload_extensions(".php"); // comma-separated list
-spl_autoload_register();
+require_once 'includes/include.php';
 
 $module = isset($_GET["m"]) ? $_GET["m"] : "";
 $action = isset($_GET["a"]) ? $_GET["a"] : "";

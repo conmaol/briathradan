@@ -12,37 +12,38 @@ class entry_instance {
 	}
 
 	public function show() {
-		echo '<div class="list-group-item">';
-		echo models\sources::getEmoji($this->_model->getSource());
-		echo '&nbsp;&nbsp;<strong>' . $this->_model->getHw() . '</strong> ';
-		echo '<em class="text-muted" data-toggle="tooltip" title="' . models\entry::getPosInfo($this->_model->getPos())[2] . '">' . models\entry::getPosInfo($this->_model->getPos())[0] . '</em> ';
-		echo '<ul style="list-style-type:none;">';
+		$html = '<div class="list-group-item">';
+		$html .= models\sources::getEmoji($this->_model->getSource());
+		$html .= '&nbsp;&nbsp;<strong>' . $this->_model->getHw() . '</strong> ';
+		$html .= '<em class="text-muted" data-toggle="tooltip" title="' . models\entry::getPosInfo($this->_model->getPos())[2] . '">' . models\entry::getPosInfo($this->_model->getPos())[0] . '</em> ';
+		$html .= '<ul style="list-style-type:none;">';
 		if ($this->_model->getForms()) {
-			echo '<li>';
+			$html .= '<li>';
 			foreach ($this->_model->getForms() as $nextForm) {
-				echo ' ' . $nextForm[0] . ' <em class="text-muted" data-toggle="tooltip" title="' . models\entry::getPosInfo($nextForm[1])[2] . '">' . models\entry::getPosInfo($nextForm[1])[0] . '</em> ';
+				$html .= ' ' . $nextForm[0] . ' <em class="text-muted" data-toggle="tooltip" title="' . models\entry::getPosInfo($nextForm[1])[2] . '">' . models\entry::getPosInfo($nextForm[1])[0] . '</em> ';
 			}
-			echo '</li>';
+			$html .= '</li>';
 		}
 		$trs = $this->_model->getTranslations();
 		if ($trs) {
-			echo '<li class="text-muted">';
+			$html .= '<li class="text-muted">';
 			foreach ($trs as $nextTranslation) {
-				echo '<mark>' . $nextTranslation[0] . '</mark>';
-				if ($nextTranslation!=end($trs)) { echo ' | '; }
+				$html .= '<mark>' . $nextTranslation[0] . '</mark>';
+				if ($nextTranslation!=end($trs)) { $html .= ' | '; }
 			}
-			echo '</li>';
+			$html .= '</li>';
 		}
 		if ($this->_model->getNotes()) {
-			echo '<li><small class="text-muted">[';
+			$html .= '<li><small class="text-muted">[';
 			foreach ($this->_model->getNotes() as $nextNote) {
-				echo '' . $nextNote[0] . '';
+				$html .= '' . $nextNote[0] . '';
 			}
-			echo ']</small></li>';
+			$html .= ']</small></li>';
 		}
-		echo '<li><small data-toggle="tooltip" data-html="true" data-placement="bottom" title="' . models\sources::getRef($this->_model->getSource()) . '">' . models\sources::getShortRef($this->_model->getSource()) . '</small></li>';
-		echo '</ul>';
-		echo '</div>';
+		$html .= '<li><small data-toggle="tooltip" data-html="true" data-placement="bottom" title="' . models\sources::getRef($this->_model->getSource()) . '">' . models\sources::getShortRef($this->_model->getSource()) . '</small></li>';
+		$html .= '</ul>';
+		$html .= '</div>';
+		return $html;
 	}
 
 }

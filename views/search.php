@@ -75,7 +75,13 @@ HTML;
 HTML;
     foreach ($entries as $nextEntry) {
 	    $url = '?m=entry&mhw=' . $nextEntry[0] . '&mpos=' . $nextEntry[1] . '&msub=' . $nextEntry[2];
-	    echo '<a href="' . $url . '" class="list-group-item list-group-item-action"><strong>';
+
+	    echo <<<HTML
+				<a href="#" class="list-group-item list-group-item-action" 
+					data-toggle="modal" data-target="#entryModal"
+					data-mhw="{$nextEntry[0]}" data-mpos="{$nextEntry[1]}" data-msub="{$nextEntry[2]}">
+					<strong>
+HTML;
 			if ($_SESSION["gd"] == "yes") {
 				echo search::_hi($nextEntry[0],$search);
 			}
@@ -88,6 +94,8 @@ HTML;
     echo <<<HTML
 			</div>
 HTML;
+		$this->_writeModal();
+		$this->_writeResultsJavascript();
 	}
 
 	private static function _hi($string,$search) { // highlights all instances of a search term in a string
@@ -105,4 +113,58 @@ HTML;
 		}
 	}
 
+	private function _writeModal() {
+		echo <<<HTML
+			<div class="modal fade" id="entryModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+              </div>
+              <div class="modal-body">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+HTML;
+	}
+
+	private function _writeResultsJavascript() {
+		echo <<<HTML
+			<script>
+				$(function () {
+				  /**
+				  * Populate the modal based on click from search result
+					*/
+				  $('#entryModal').on('show.bs.modal', function (event) { 
+            let entryLink = $(event.relatedTarget);
+				    let mhw = entryLink.attr('data-mhw');
+				    let mpos = entryLink.attr('data-mpos');
+				    let msub = entryLink.attr('data-msub');
+				    writeEntry(mhw, mpos, msub);
+				  });
+				  
+				  /**
+				  * Populate the modal based on click from modal content 
+					*/
+				  $(document).on('click', '.entryRow', function () {
+				    let mhw = $(this).attr('data-mhw');
+				    let mpos = $(this).attr('data-mpos');
+				    let msub = $(this).attr('data-msub');
+				    writeEntry(mhw, mpos, msub);
+				  });
+				});
+				
+				function writeEntry(mhw, mpos, msub) {
+				  let modal = $('#entryModal');
+				  $.getJSON('ajax.php?action=getEntry&mhw='+mhw+'&mpos='+mpos+'&msub='+msub, function (data) {
+							modal.find('.modal-body').html(data.html);				    
+				    });
+				}
+			</script>
+HTML;
+
+	}
 }
