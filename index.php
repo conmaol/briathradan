@@ -7,9 +7,10 @@ require_once 'includes/include.php';
 $module = isset($_GET["m"]) ? $_GET["m"] : "";
 $action = isset($_GET["a"]) ? $_GET["a"] : "";
 
+/*
 if ($_GET["gd"]) {
 	$_SESSION["gd"] = $_GET["gd"];
-}
+}*/
 if (empty($_SESSION["gd"])) {
 	$_SESSION["gd"] = "no";
 }

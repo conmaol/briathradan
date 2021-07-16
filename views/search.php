@@ -27,23 +27,23 @@ class search {
 					  </div>
 				  </div>
         </div>
-        <div class="form-group">
+      </form>
+			<div class="form-group">
 				  <div class="form-check form-check-inline" data-toggle="tooltip" title="Enter English term">
-					  <input class="form-check-input" type="radio" name="gd" id="enRadio" value="no"
+					  <input class="gdSelect form-check-input" type="radio" name="gd" id="enRadio" value="no"
 HTML;
-    if ($_SESSION["gd"] != "yes") { echo ' checked>'; };
-    echo <<<HTML
+		if ($_SESSION["gd"] != "yes") { echo ' checked>'; };
+		echo <<<HTML
 					  <label class="form-check-label" for="enRadio">Beurla</label>
 				  </div>
 				  <div class="form-check form-check-inline" data-toggle="tooltip" title="Enter Gaelic term">
-					  <input class="form-check-input" type="radio" name="gd" id="gdRadio" value="yes"
+					  <input class="gdSelect form-check-input" type="radio" name="gd" id="gdRadio" value="yes"
 HTML;
 		if ($_SESSION["gd"] == "yes") { echo ' checked>'; };
 		echo <<<HTML
 					  <label class="form-check-label" for="gdRadio">Gàidhlig</label>
 				  </div>
         </div>
-      </form>
 HTML;
     if ($this->_model->getSearch()=='') {
 			echo <<<HTML
@@ -135,6 +135,13 @@ HTML;
 		echo <<<HTML
 			<script>
 				$(function () {
+				  /**
+				  * Set the language session variable
+				  */
+				  $('.gdSelect').on('click', function () {
+				    $.ajax('ajax.php?action=setLang&gdSelect='+$(this).val());
+				  });
+				  
 				  /**
 				  * Populate the modal based on click from search result
 					*/
