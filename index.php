@@ -58,6 +58,11 @@ if ($_GET["mhw"]) {
 	  let msub = '{$_GET["msub"]}';
 	  writeEntry(mhw, mpos, msub);
 JS;
+} else if ($_GET["random"] == "yes") {
+	$loadEntryJS = <<<JS
+		writeEntry('', '', '');
+JS;
+
 }
 
 echo <<<HTML
