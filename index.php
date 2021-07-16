@@ -25,6 +25,7 @@ echo <<<HTML
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="js/main.js"></script>
 HTML;
   if ($_GET["search"]) {
 		echo "<title>🏛 \"" . $_GET["search"] . "\" ??</title>";
@@ -50,6 +51,17 @@ switch ($module) {
 }
 $controller->run($action);
 
+
+if ($_GET["mhw"]) {
+	$loadEntryJS =  <<<JS
+		let mhw = '{$_GET["mhw"]}';
+	  let mpos = '{$_GET["mpos"]}';
+	  let msub = '{$_GET["msub"]}';
+	  writeEntry(mhw, mpos, msub);
+//	  $('#entryModal').modal();
+JS;
+}
+
 echo <<<HTML
     <nav class="navbar navbar-dark bg-primary fixed-bottom navbar-expand-lg">
 		  <a class="navbar-brand" href="index.php">🏛 Am Briathradan</a>
@@ -63,9 +75,24 @@ echo <<<HTML
 		  </div>
 	  </nav>
 	</div>
+	<div class="modal fade" id="entryModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
+        </div>
+      </div>
+    </div>
+ </div>
   <script>
       $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip();
+        
+        {$loadEntryJS}
       })
   </script>
 </body>
