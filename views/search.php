@@ -78,7 +78,7 @@ HTML;
 	    $url = '?m=entry&mhw=' . $nextEntry[0] . '&mpos=' . $nextEntry[1] . '&msub=' . $nextEntry[2];
 
 	    echo <<<HTML
-				<a href="#" class="entryResult list-group-item list-group-item-action"
+				<a href="#" class="entryRow list-group-item list-group-item-action"
 					data-toggle="modal" data-target="#entryModal"
 					data-mhw="{$nextEntry[0]}" data-mpos="{$nextEntry[1]}" data-msub="{$nextEntry[2]}">
 					<strong>

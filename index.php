@@ -51,14 +51,16 @@ switch ($module) {
 }
 $controller->run($action);
 
-
+/**
+ * Handle request in the URL to display an entry automatically on page load
+ */
+$loadEntryJS = "";
 if ($_GET["mhw"]) {
 	$loadEntryJS =  <<<JS
 		let mhw = '{$_GET["mhw"]}';
 	  let mpos = '{$_GET["mpos"]}';
 	  let msub = '{$_GET["msub"]}';
 	  writeEntry(mhw, mpos, msub);
-//	  $('#entryModal').modal();
 JS;
 }
 
@@ -70,7 +72,7 @@ echo <<<HTML
 		  </button>
 		  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			  <div class="navbar-nav">
-				  <a class="nav-item nav-link" href="?m=entry&a=random" data-toggle="tooltip" title="View random entry">sonas</a>
+				  <a class="randomEntry nav-item nav-link" href="#" data-toggle="tooltip" title="View random entry">sonas</a>
 			  </div>
 		  </div>
 	  </nav>

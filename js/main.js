@@ -7,27 +7,8 @@ $(function () {
   });
 
   /**
-   * Populate the modal based on click from search result
-   */
-/*  $('#entryModal').on('show.bs.modal', function (event) {
-    let entryLink = $(event.relatedTarget);
-    let mhw = entryLink.attr('data-mhw');
-    let mpos = entryLink.attr('data-mpos');
-    let msub = entryLink.attr('data-msub');
-    writeEntry(mhw, mpos, msub);
-  });
-*/
-  $('.entryResult').on('click', function () {
-    let entryLink = $(this);
-    let mhw = entryLink.attr('data-mhw');
-    let mpos = entryLink.attr('data-mpos');
-    let msub = entryLink.attr('data-msub');
-    writeEntry(mhw, mpos, msub);
-  });
-
-
-  /**
-   * Populate the modal based on click from modal content
+   * Fetch the params (from either a search result or link in existing modal content) required to write an entry
+   * then call writeEntry to populate and show the modal
    */
   $(document).on('click', '.entryRow', function () {
     let mhw = $(this).attr('data-mhw');
@@ -35,8 +16,22 @@ $(function () {
     let msub = $(this).attr('data-msub');
     writeEntry(mhw, mpos, msub);
   });
+
+  /**
+   * show a random entry on click of the link
+   */
+  $('.randomEntry').on('click', function() {
+    writeEntry('', '', '');
+  });
+
 });
 
+/**
+ * Populate the modal using AJAX data and show
+ * @param mhw
+ * @param mpos
+ * @param msub
+ */
 function writeEntry(mhw, mpos, msub) {
   let modal = $('#entryModal');
   $.getJSON('ajax.php?action=getEntry&mhw='+mhw+'&mpos='+mpos+'&msub='+msub, function (data) {
@@ -45,5 +40,4 @@ function writeEntry(mhw, mpos, msub) {
     .done(function () {
       $('#entryModal').modal('show');
     });
-
 }
