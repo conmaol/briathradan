@@ -45,7 +45,7 @@ SQL;
     		WHERE `m-hw` = :mhw
     		AND `m-pos` = :mpos
     		AND `m-sub` = :msub
-        ORDER BY LENGTH(`hw`), `hw`, `source` DESC
+        ORDER BY `source`
 SQL;
     $results = $this->_db->fetch($sql, array(":mhw" => $this->_mhw, ":mpos" => $this->_mpos, ":msub" => $this->_msub));
     foreach ($results as $nextResult) {
