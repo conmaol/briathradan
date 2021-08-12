@@ -27,6 +27,9 @@ class sources {
       case "223":
       	return 'ALT-LXCP';
       	break;
+      case "323":
+      	return 'EX-LXCP';
+      	break;
     	default:
     		return '[unknown]';
     }
@@ -55,6 +58,9 @@ class sources {
       case "223":
       	return 'Roghainnean eile';
       	break;
+      case "323":
+      	return 'Eisimpleirean';
+      	break;
     	default:
     		return '[unknown]';
     }
@@ -82,6 +88,9 @@ class sources {
         break;
       case "223":
         return '✳️';
+        break;
+      case "323":
+        return 'ℹ️';
         break;
       default:
         return '';
