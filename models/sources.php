@@ -24,6 +24,9 @@ class sources {
     	case "23":
     		return 'LXCP';
     		break;
+      case "223":
+      	return 'ALT-LXCP';
+      	break;
     	default:
     		return '[unknown]';
     }
@@ -49,6 +52,9 @@ class sources {
     	case "23":
     		return 'Briathran à stòr <em>Lexicopia</em>';
     		break;
+      case "223":
+      	return 'Roghainnean eile';
+      	break;
     	default:
     		return '[unknown]';
     }
@@ -73,6 +79,9 @@ class sources {
         break;
       case "23":
         return '♒️';
+        break;
+      case "223":
+        return '✳️';
         break;
       default:
         return '';
