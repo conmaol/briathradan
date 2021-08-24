@@ -61,16 +61,22 @@ HTML;
 		}
 		// slips
 	  if ($slips = $this->_model->getSlipInfo()) {
+			$html .= '<small><a data-toggle="collapse" href="#examples">[+/- eisimplearan]</a></small>';
+			$html .= '<div class="collapse list-group" id="examples">';
 	  	foreach ($slips as $slip) {
-	  		$context = $slip->context->pre->output . "<mark>" . $slip->context->word . "</mark>" . $slip->context->post->output;
+	  		$context = $slip->context->pre->output . " " . $slip->context->word . " " . $slip->context->post->output;
+				$en = $slip->translation;
+				$enid = 'en' . $slip->auto_id;
 	  		$html .= <<<HTML
-					<div class="slip">
-						<div>{$context}</div>
-						<div><small><em>{$slip->translation}</em></small></div>
-						<div style="margin:-15px 0 20px 0;">#{$slip->tid}, p{$slip->page}</div>
+					<div class="slip list-group-item">
+						{$context}
+						<small class="text-muted">[#{$slip->tid}: td. {$slip->page}]</small>
+						<small><a data-toggle="collapse" href="#{$enid}">[?]</a></small>
+						<small class="collapse text-muted" id="{$enid}">{$en}</small>
 					</div>
 HTML;
 		  }
+			$html .= '</div>';
 	  }
 		$html .= '</div>';
     $html .= <<<HTML
