@@ -59,6 +59,7 @@ HTML;
 			$html .= '</p>';
 
 		}
+		// slips
 	  if ($slips = $this->_model->getSlipInfo()) {
 	  	foreach ($slips as $slip) {
 	  		$context = $slip->context->pre->output . "<mark>" . $slip->context->word . "</mark>" . $slip->context->post->output;
