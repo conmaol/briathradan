@@ -14,7 +14,7 @@ class search {
 	public function show() {
 		$search = $this->_model->getSearch();
 		if (!$search) {
-			$search = "dog";
+			$search = "explosive";
 		}
     echo <<<HTML
       <form action="#" method="get" autocomplete="off" id="searchForm">
@@ -27,23 +27,24 @@ class search {
 					  </div>
 				  </div>
         </div>
-        <div class="form-group">
+        <input type="hidden" name="m" value="search">
+      </form>
+			<div class="form-group">
 				  <div class="form-check form-check-inline" data-toggle="tooltip" title="Enter English term">
-					  <input class="form-check-input" type="radio" name="gd" id="enRadio" value="no"
 HTML;
-    if ($_SESSION["gd"] != "yes") { echo ' checked>'; };
-    echo <<<HTML
+		$checked = ($_SESSION["gd"] != "yes") ?  'checked' : '';
+		echo <<<HTML
+						<input class="gdSelect form-check-input" type="radio" name="gd" id="enRadio" value="no" {$checked}>
 					  <label class="form-check-label" for="enRadio">Beurla</label>
 				  </div>
 				  <div class="form-check form-check-inline" data-toggle="tooltip" title="Enter Gaelic term">
-					  <input class="form-check-input" type="radio" name="gd" id="gdRadio" value="yes"
 HTML;
-		if ($_SESSION["gd"] == "yes") { echo ' checked>'; };
+		$checked = ($_SESSION["gd"] == "yes") ?  'checked' : '';
 		echo <<<HTML
+						<input class="gdSelect form-check-input" type="radio" name="gd" id="gdRadio" value="yes" {$checked}>
 					  <label class="form-check-label" for="gdRadio">Gàidhlig</label>
 				  </div>
         </div>
-      </form>
 HTML;
     if ($this->_model->getSearch()=='') {
 			echo <<<HTML
@@ -75,7 +76,13 @@ HTML;
 HTML;
     foreach ($entries as $nextEntry) {
 	    $url = '?m=entry&mhw=' . $nextEntry[0] . '&mpos=' . $nextEntry[1] . '&msub=' . $nextEntry[2];
-	    echo '<a href="' . $url . '" class="list-group-item list-group-item-action"><strong>';
+
+	    echo <<<HTML
+				<a href="#" class="entryRow list-group-item list-group-item-action"
+					data-toggle="modal" data-target="#entryModal"
+					data-mhw="{$nextEntry[0]}" data-mpos="{$nextEntry[1]}" data-msub="{$nextEntry[2]}">
+					<strong>
+HTML;
 			if ($_SESSION["gd"] == "yes") {
 				echo search::_hi($nextEntry[0],$search);
 			}
@@ -104,5 +111,4 @@ HTML;
 		  }
 		}
 	}
-
 }

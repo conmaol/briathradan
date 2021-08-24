@@ -10,6 +10,7 @@ class entry {
   private $_instances = array(); // an array of entry_instance models
   private $_parts = array();
   private $_compounds = array();
+  private $_slips = array();
   private $_db;   // an instance of models\database
 
 	public function __construct($mhw,$mpos,$msub,$db) {
@@ -39,15 +40,18 @@ SQL;
 	}
 
   private function _load() {
+		$mhw = $this->_mhw;
+		$mpos = $this->_mpos;
+		$msub = $this->_msub;
     $sql = <<<SQL
     	SELECT `id`
     		FROM `lexemes`
     		WHERE `m-hw` = :mhw
     		AND `m-pos` = :mpos
     		AND `m-sub` = :msub
-        ORDER BY LENGTH(`hw`), `hw`, `source` DESC
+        ORDER BY `source`
 SQL;
-    $results = $this->_db->fetch($sql, array(":mhw" => $this->_mhw, ":mpos" => $this->_mpos, ":msub" => $this->_msub));
+    $results = $this->_db->fetch($sql, array(":mhw" => $mhw, ":mpos" => $mpos, ":msub" => $msub));
     foreach ($results as $nextResult) {
       $this->_instances[] = new entry_instance($nextResult["id"]);
     }
@@ -58,7 +62,7 @@ SQL;
     		AND `m-pos` =  :mpos
     		AND `m-sub` =  :msub
 SQL;
-    $results = $this->_db->fetch($sql, array(":mhw" => $this->_mhw, ":mpos" => $this->_mpos, ":msub" => $this->_msub));
+    $results = $this->_db->fetch($sql, array(":mhw" => $mhw, ":mpos" => $mpos, ":msub" => $msub));
     foreach ($results as $nextResult) {
       $this->_parts[] = [$nextResult["m-p-hw"], $nextResult["m-p-pos"], $nextResult["m-p-sub"]];
     }
@@ -70,11 +74,23 @@ SQL;
     		AND `m-p-sub` = :msub
         ORDER BY LENGTH(`m-hw`)
 SQL;
-    $results = $this->_db->fetch($sql, array(":mhw" => $this->_mhw, ":mpos" => $this->_mpos, ":msub" => $this->_msub));
+    $results = $this->_db->fetch($sql, array(":mhw" => $mhw, ":mpos" => $mpos, ":msub" => $msub));
     foreach ($results as $nextResult) {
     	$this->_compounds[] = [$nextResult["m-hw"], $nextResult["m-pos"], $nextResult["m-sub"]];
     }
-	}
+    $sql = <<<SQL
+			SELECT `id`, `slipref`
+				FROM `slips`
+				WHERE `mhw` = :mhw
+				AND `mpos` = :mpos 
+				AND `msub` = :msub
+				ORDER BY slipref
+SQL;
+		$results = $this->_db->fetch($sql, array(":mhw" => $mhw, ":mpos" => $mpos, ":msub" => $msub));
+		foreach ($results as $nextResult) {
+			$this->_slips[$nextResult["id"]] = $nextResult["slipref"];
+		}
+ 	}
 
   public function getMhw() {
     return $this->_mhw;
@@ -94,6 +110,23 @@ SQL;
 
   public function getParts() {
     return $this->_parts;
+  }
+
+  public function getSlips() {
+		return $this->_slips;
+  }
+
+  /*
+   * Queries Meanma for slip info and returns a StdClass object for each slipId and its info in key value pairs
+   */
+  public function getSlipInfo() {
+		$slipInfo = array();
+		foreach ($this->getSlips() as $slipId) {
+			$url = "https://dasg.ac.uk/meanma/ajax.php?action=loadSlipData&groupId=3&id=" . $slipId;
+			$data = file_get_contents($url);
+			$slipInfo[$slipId] = json_decode($data);
+		}
+		return $slipInfo;
   }
 
   public function getCompounds() {

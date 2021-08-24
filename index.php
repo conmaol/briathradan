@@ -4,21 +4,13 @@ namespace controllers;
 
 session_start();
 
-//ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
-define("DB", "briathradan");
-define("DB_HOST", "130.209.99.241");
-define("DB_USER", "corpas");
-define("DB_PASSWORD", "XmlCraobh2020");
-//autoload classes
-spl_autoload_extensions(".php"); // comma-separated list
-spl_autoload_register();
+$_SESSION["groupId"] = 3; //need to set this for the database queries
+
+require_once 'includes/include.php';
 
 $module = isset($_GET["m"]) ? $_GET["m"] : "";
 $action = isset($_GET["a"]) ? $_GET["a"] : "";
 
-if ($_GET["gd"]) {
-	$_SESSION["gd"] = $_GET["gd"];
-}
 if (empty($_SESSION["gd"])) {
 	$_SESSION["gd"] = "no";
 }
@@ -33,6 +25,7 @@ echo <<<HTML
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="js/main.js"></script>
 HTML;
   if ($_GET["search"]) {
 		echo "<title>🏛 \"" . $_GET["search"] . "\" ??</title>";
@@ -58,6 +51,24 @@ switch ($module) {
 }
 $controller->run($action);
 
+/**
+ * Handle request in the URL to display an entry automatically on page load
+ */
+$loadEntryJS = "";
+if ($_GET["mhw"]) {
+	$loadEntryJS =  <<<JS
+		let mhw = '{$_GET["mhw"]}';
+	  let mpos = '{$_GET["mpos"]}';
+	  let msub = '{$_GET["msub"]}';
+	  writeEntry(mhw, mpos, msub);
+JS;
+} else if ($_GET["random"] == "yes") {
+	$loadEntryJS = <<<JS
+		writeEntry('', '', '');	
+JS;
+
+}
+
 echo <<<HTML
     <nav class="navbar navbar-dark bg-primary fixed-bottom navbar-expand-lg">
 		  <a class="navbar-brand" href="index.php">🏛 Am Briathradan</a>
@@ -66,14 +77,30 @@ echo <<<HTML
 		  </button>
 		  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			  <div class="navbar-nav">
-				  <a class="nav-item nav-link" href="?m=entry&a=random" data-toggle="tooltip" title="View random entry">sonas</a>
+				  <a class="randomEntry nav-item nav-link" href="#" data-toggle="tooltip" title="View random entry">sonas</a>
 			  </div>
 		  </div>
 	  </nav>
 	</div>
+	<div class="modal fade" id="entryModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
+        </div>
+      </div>
+    </div>
+ </div>
   <script>
       $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip();
+        
+        {$loadEntryJS}
+
       })
   </script>
 </body>
