@@ -66,6 +66,7 @@ HTML;
 					<div class="slip">
 						<div>{$context}</div>
 						<div><small><em>{$slip->translation}</em></small></div>
+						<div style="margin:-15px 0 20px 0;">#{$slip->tid}, p{$slip->page}</div>
 					</div>
 HTML;
 		  }
