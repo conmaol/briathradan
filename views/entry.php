@@ -57,7 +57,19 @@ HTML;
         if ($nextCompound!=end($cs)) { $html .= ' <span class="text-muted">|</span> '; }
 			}
 			$html .= '</p>';
+
 		}
+	  if ($slips = $this->_model->getSlipInfo()) {
+	  	foreach ($slips as $slip) {
+	  		$context = $slip->context->pre->output . "<mark>" . $slip->context->word . "</mark>" . $slip->context->post->output;
+	  		$html .= <<<HTML
+					<div class="slip">
+						<div>{$context}</div>
+						<div><small><em>{$slip->translation}</em></small></div>
+					</div>
+HTML;
+		  }
+	  }
 		$html .= '</div>';
     $html .= <<<HTML
 		<div class="modal-footer">
@@ -66,5 +78,4 @@ HTML;
 HTML;
 		return $html;
 	}
-
 }

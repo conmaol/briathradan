@@ -2,6 +2,10 @@
 
 namespace controllers;
 
+session_start();
+
+$_SESSION["groupId"] = 3; //need to set this for the database queries
+
 require_once 'includes/include.php';
 
 $module = isset($_GET["m"]) ? $_GET["m"] : "";
@@ -60,7 +64,7 @@ if ($_GET["mhw"]) {
 JS;
 } else if ($_GET["random"] == "yes") {
 	$loadEntryJS = <<<JS
-		writeEntry('', '', '');
+		writeEntry('', '', '');	
 JS;
 
 }
@@ -96,6 +100,7 @@ echo <<<HTML
         $('[data-toggle="tooltip"]').tooltip();
         
         {$loadEntryJS}
+
       })
   </script>
 </body>
