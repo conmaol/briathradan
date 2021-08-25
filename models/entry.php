@@ -122,7 +122,7 @@ SQL;
   public function getSlipInfo() {
 		$slipInfo = array();
 		foreach ($this->getSlips() as $slipId) {
-			$url = "https://dasg.ac.uk/meanma/ajax.php?action=loadSlipData&groupId=3&id=" . $slipId;
+			$url = "https://dasg.ac.uk/meanma/ajax.php?action=loadSlipData&groupId={$_SESSION["groupId"]}&id=" . $slipId;
 			$data = file_get_contents($url);
 			$slipInfo[$slipId] = json_decode($data);
 		}
