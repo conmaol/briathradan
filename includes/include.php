@@ -6,7 +6,7 @@ session_start();
 define("DB", "briathradan");
 define("DB_HOST", "130.209.99.241");
 define("DB_USER", "corpas");
-define("DB_PASSWORD", "XmlCraobh2020");
+define("DB_PASSWORD", "novelle-munch-demote");
 //autoload classes
 spl_autoload_extensions(".php"); // comma-separated list
 spl_autoload_register();
