@@ -117,10 +117,9 @@ SQL;
   }
 
   /*
-   * Queries Meanma for slip info and returns a StdClass object for each slipId and its info in key value pairs
+   * Queries Meanma for slip info and returns a StdClass object for each slipId and its info in key value pairs.
    */
   public function getSlipInfo() {
-		$slipInfo = array();
 		foreach ($this->getSlips() as $slipId) {
 			$url = "https://dasg.ac.uk/meanma/ajax.php?action=loadSlipData&groupId={$_SESSION["groupId"]}&id=" . $slipId;
 			$data = file_get_contents($url);
