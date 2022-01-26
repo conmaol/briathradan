@@ -1,15 +1,10 @@
 <?php
 
-namespace controllers;
-
 session_start();
 
 $_SESSION["groupId"] = 3; //need to set this for the database queries
 
 require_once 'includes/include.php';
-
-$module = isset($_GET["m"]) ? $_GET["m"] : "";
-$action = isset($_GET["a"]) ? $_GET["a"] : "";
 
 if (empty($_SESSION["gd"])) {
 	$_SESSION["gd"] = "no";
@@ -42,14 +37,9 @@ echo <<<HTML
   <div class="container-fluid">
 HTML;
 
-switch ($module) {
-	case "entry":
-		$controller = new entry(); // view entry
-		break;
-	default:
-		$controller = new search(); // show search box
-}
-$controller->run($action);
+$model = new models\search();
+$view = new views\search($model);
+$view->show();
 
 /**
  * Handle request in the URL to display an entry automatically on page load
@@ -64,7 +54,7 @@ if ($_GET["mhw"]) {
 JS;
 } else if ($_GET["random"] == "yes") {
 	$loadEntryJS = <<<JS
-		writeEntry('', '', '');	
+		writeEntry('', '', '');
 JS;
 
 }
@@ -98,7 +88,7 @@ echo <<<HTML
   <script>
       $(function () {
         $('[data-toggle="tooltip"]').tooltip();
-        
+
         {$loadEntryJS}
 
       })

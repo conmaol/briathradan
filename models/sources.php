@@ -7,22 +7,22 @@ class sources {
   public static function getShortRef($id) {
     switch ($id) {
     	case "101":
-    		return 'Eaglais &amp; Bìoball';
+    		return 'Eaglais';
     		break;
       case "102":
       	return 'Rianachd Phoblach';
       	break;
       case "103":
-      	return 'Foghlam Sgoile';
+      	return 'Sgoil';
       	break;
       case "104":
-      	return 'Glèidteachas nàdair';
+      	return 'Nàdar';
       	break;
     	case "122":
     		return 'Dwelly';
     		break;
     	case "23":
-    		return 'LXCP';
+    		return '';
     		break;
       case "223":
       	return 'ALT-LXCP';
@@ -38,10 +38,10 @@ class sources {
   public static function getRef($id) {
     switch ($id) {
     	case "101":
-    		return 'Briathran eaglaiseil (Eaglais na h-Alba, <em>Am Bìoball</em>)';
+    		return 'Briathran eaglaiseil (Eaglais na h-Alba, Am Bìoball)';
     		break;
       case "102":
-      	return 'Briathran airson rianachd poblaich (<em>Faclair na Pàrlamaid</em>, <em>Faclair Rianachd Phoblaich</em>)';
+      	return 'Briathran airson rianachd poblaich (Faclair na Pàrlamaid, Faclair Rianachd Phoblaich)';
       	break;
       case "103":
       	return 'Briathran airson sgoiltean (Stòrlann, Foghlam Alba)';
@@ -50,7 +50,7 @@ class sources {
       	return 'Briathran à Buidhinn Nàdair na h-Alba';
       	break;
     	case "122":
-    		return 'Briathran à Dwelly – <em>Faclair Gàidhlig gu Beurla le Dealbhan</em>';
+    		return 'Briathran à Dwelly – Faclair Gàidhlig gu Beurla le Dealbhan';
     		break;
     	case "23":
     		return 'Briathran à stòr <em>Lexicopia</em>';
@@ -75,7 +75,7 @@ class sources {
         return '🗳';
         break;
       case "103":
-        return '🎒';
+        return '🧒🏻';
         break;
       case "104":
         return '🌿';

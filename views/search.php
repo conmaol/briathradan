@@ -14,7 +14,7 @@ class search {
 	public function show() {
 		$search = $this->_model->getSearch();
 		if (!$search) {
-			$search = "explosive";
+			$search = "franchise";
 		}
     echo <<<HTML
       <form action="#" method="get" autocomplete="off" id="searchForm">
@@ -27,7 +27,6 @@ class search {
 					  </div>
 				  </div>
         </div>
-        <input type="hidden" name="m" value="search">
       </form>
 			<div class="form-group">
 				  <div class="form-check form-check-inline" data-toggle="tooltip" title="Enter English term">
@@ -51,17 +50,12 @@ HTML;
 			  <hr/>
         <p>
           Is e stòr fhaclan agus abairtean na Gàidhlig a tha anns a’ Bhriathradan,
-					a tha a’ tiomsachadh bhriathran à iomadh thùs,
+					a’ tiomsachadh bhriathran à iomadh thùs,
 					dùthchasach agus nua-aimsireil.
 					Chaidh an stèidheachadh le sgioba <a href="https://dasg.ac.uk" target="_new">DASG</a>
 					ann an Oilthigh Ghlaschu,
 					le taic bho <a href="https://www.gaidhlig.scot" target="_new">Bhòrd na Gàidhlig</a>
 					agus bho <a href="http://www.soillse.ac.uk" target="_new">Shoillse</a>.
-				</p>
-				<p>
-					<span style="color:red;">Thoir an aire!</span>
-					Tha faclan agus abairtean anns an stòr seo a tha caran seann-fhasanta
-					agus is dòcha oilbheumach.
 				</p>
 HTML;
 	    return;
@@ -75,8 +69,6 @@ HTML;
 			<div class="list-group list-group-flush">
 HTML;
     foreach ($entries as $nextEntry) {
-	    $url = '?m=entry&mhw=' . $nextEntry[0] . '&mpos=' . $nextEntry[1] . '&msub=' . $nextEntry[2];
-
 	    echo <<<HTML
 				<a href="#" class="entryRow list-group-item list-group-item-action"
 					data-toggle="modal" data-target="#entryModal"

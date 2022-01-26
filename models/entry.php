@@ -82,7 +82,7 @@ SQL;
 			SELECT `id`, `slipref`
 				FROM `slips`
 				WHERE `mhw` = :mhw
-				AND `mpos` = :mpos 
+				AND `mpos` = :mpos
 				AND `msub` = :msub
 				ORDER BY slipref
 SQL;
@@ -143,8 +143,11 @@ SQL;
       case "ff":
         return ['boir.', 'ainm boireann', 'feminine proper noun'];
         break;
+      case "mm":
+        return ['fir.', 'ainm fireann', 'masculine proper noun'];
+        break;
       case "n":
-        return ['boir./fir.', 'ainmear (fireann/boireann)', 'noun (masculine/feminine)'];
+        return ['ainm.', 'ainmear (fireann/boireann)', 'noun (masculine/feminine)'];
         break;
       case "v":
         return ['gn.', 'gnìomhair', 'verb'];
@@ -166,9 +169,6 @@ SQL;
         break;
       case "vn":
         return ['ainm.', 'ainmear gnìomaireach', 'verbal noun'];
-        break;
-      case "x":
-        return ['', '', ''];
         break;
       default:
         return [$pos, $pos, $pos];
