@@ -49,6 +49,7 @@ SQL;
     		WHERE `m-hw` = :mhw
     		AND `m-pos` = :mpos
     		AND `m-sub` = :msub
+        AND `source` < 200
         ORDER BY `source`
 SQL;
     $results = $this->_db->fetch($sql, array(":mhw" => $mhw, ":mpos" => $mpos, ":msub" => $msub));
