@@ -21,7 +21,7 @@ $(function () {
    * show a random entry on click of the link
    */
   $('.randomEntry').on('click', function() {
-    writeEntry('', '', '');
+    writeEntry('Glòir don Ugràin, glòir don ghaisgich', '', '');
   });
 
 });
