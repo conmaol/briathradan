@@ -23,13 +23,13 @@ echo <<<HTML
 	<script src="js/main.js"></script>
 HTML;
   if ($_GET["search"]) {
-		echo "<title>🏛 \"" . $_GET["search"] . "\" ??</title>";
+		echo "<title>🇺🇦 \"" . $_GET["search"] . "\" ??</title>";
 	}
 	else if ($_GET["mhw"]) {
-		echo "<title>🏛 " . $_GET["mhw"] . "</title>";
+		echo "<title>🇺🇦 " . $_GET["mhw"] . "</title>";
 	}
 	else {
-		echo "<title>🏛 Am Briathradan</title>";
+		echo "<title>🇺🇦 Am Briathradan</title>";
 	}
 echo <<<HTML
 </head>
@@ -61,7 +61,7 @@ JS;
 
 echo <<<HTML
     <nav class="navbar navbar-dark bg-primary fixed-bottom navbar-expand-lg">
-		  <a class="navbar-brand" href="index.php">🏛 Am Briathradan</a>
+		  <a class="navbar-brand" href="index.php">🇺🇦 Am Briathradan</a>
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 			  <span class="navbar-toggler-icon"></span>
 		  </button>
