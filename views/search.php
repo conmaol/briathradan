@@ -14,7 +14,7 @@ class search {
 	public function show() {
 		$search = $this->_model->getSearch();
 		if (!$search) {
-			$search = "franchise";
+			$search = "";
 		}
     echo <<<HTML
       <form action="#" method="get" autocomplete="off" id="searchForm">
