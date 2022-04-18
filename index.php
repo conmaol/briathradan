@@ -23,13 +23,13 @@ echo <<<HTML
 	<script src="js/main.js"></script>
 HTML;
   if ($_GET["search"]) {
-		echo "<title>🇺🇦 \"" . $_GET["search"] . "\" ??</title>";
+		echo "<title>🔡 \"" . $_GET["search"] . "\" ??</title>";
 	}
 	else if ($_GET["mhw"]) {
-		echo "<title>🇺🇦 " . $_GET["mhw"] . "</title>";
+		echo "<title>🔡 " . $_GET["mhw"] . "</title>";
 	}
 	else {
-		echo "<title>🇺🇦 Am Briathradan</title>";
+		echo "<title>🔡 Am Briathradan</title>";
 	}
 echo <<<HTML
 </head>
