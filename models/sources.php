@@ -53,7 +53,7 @@ class sources {
     		return 'Briathran à Dwelly – Faclair Gàidhlig gu Beurla le Dealbhan';
     		break;
     	case "23":
-    		return 'Briathran à stòr <em>Lexicopia</em>';
+    		return 'Briathran à stòr Lexicopia';
     		break;
       case "223":
       	return 'Roghainnean eile';
@@ -84,7 +84,7 @@ class sources {
         return '🗝';
         break;
       case "23":
-        return '🇺🇦';
+        return '♒️';
         break;
       case "223":
         return '✳️';
