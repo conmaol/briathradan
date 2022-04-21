@@ -12,9 +12,9 @@ class entry_instance {
 	}
 
 	public function show() {
-		$html = '<div class="list-group-item">';
+		$html = '<div class="list-group-item"><span title="' . models\sources::getRef($this->_model->getSource()) . '">';
 		$html .= models\sources::getEmoji($this->_model->getSource());
-		$html .= '&nbsp;&nbsp;<strong>' . $this->_model->getHw() . '</strong> ';
+		$html .= '</span>&nbsp;&nbsp;<strong>' . $this->_model->getHw() . '</strong> ';
 		$html .= '<em class="text-muted" data-toggle="tooltip" title="' . models\entry::getPosInfo($this->_model->getPos())[2] . '">' . models\entry::getPosInfo($this->_model->getPos())[0] . '</em> ';
 		$html .= '<ul style="list-style-type:none;">';
 		if ($this->_model->getForms()) {
@@ -40,7 +40,7 @@ class entry_instance {
 			}
 			$html .= ']</small></li>';
 		}
-		$html .= '<li><small data-toggle="tooltip" data-html="true" data-placement="bottom" title="' . models\sources::getRef($this->_model->getSource()) . '">' . models\sources::getShortRef($this->_model->getSource()) . '</small></li>';
+		//$html .= '<li><small data-toggle="tooltip" data-html="true" data-placement="bottom" title="' . models\sources::getRef($this->_model->getSource()) . '">' . models\sources::getShortRef($this->_model->getSource()) . '</small></li>';
 		$html .= '</ul>';
 		$html .= '</div>';
 		return $html;
