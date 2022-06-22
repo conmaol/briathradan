@@ -23,8 +23,8 @@ class entry {
 		$html .= '<div class="modal-body">';
 		$ps = $this->_model->getParts();
     if ($ps) {
-		  $html .= '<p>↗️ ';
-		  foreach ($ps as $nextPart) {
+		$html .= '<p>↗️ ';
+		foreach ($ps as $nextPart) {
 		  	$html .= <<<HTML
 			  <a href="#" class="entryRow"
 					data-mhw="{$nextPart[0]}" data-mpos="{$nextPart[1]}" data-msub="{$nextPart[2]}">
@@ -79,7 +79,10 @@ HTML;
 		  }
 			$html .= '</div>';
 	  }
-		$html .= '</div>';
+      
+	$html .= '[DISPLAY SENSE HERE]';
+
+	$html .= '</div>';
     $html .= <<<HTML
 		<div class="modal-footer">
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">dùin</button>

@@ -11,6 +11,7 @@ class entry {
   private $_parts = array();
   private $_compounds = array();
   private $_slips = array();
+  private $_sense; // SENSE STRUCTURE, WITH CITATIONS
   private $_db;   // an instance of models\database
 
 	public function __construct($mhw,$mpos,$msub,$db) {
