@@ -80,7 +80,8 @@ HTML;
 			$html .= '</div>';
 	  }
       
-	$html .= '[DISPLAY SENSE HERE]';
+	//$html .= '[DISPLAY SENSE HERE]';
+  $html .= $this->_model->getSenseInfo();
 
 	$html .= '</div>';
     $html .= <<<HTML

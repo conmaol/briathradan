@@ -12,6 +12,7 @@ class entry {
   private $_compounds = array();
   private $_slips = array();
   private $_sense; // SENSE STRUCTURE, WITH CITATIONS
+	private $_senseId = null;
   private $_db;   // an instance of models\database
 
 	public function __construct($mhw,$mpos,$msub,$db) {
@@ -92,6 +93,15 @@ SQL;
 		foreach ($results as $nextResult) {
 			$this->_slips[$nextResult["id"]] = $nextResult["slipref"];
 		}
+	  $sql = <<<SQL
+			SELECT `senseid`
+				FROM `senses`
+				WHERE `mhw` = :mhw
+				AND `mpos` = :mpos
+				AND `msub` = :msub
+SQL;
+	  $result = $this->_db->fetch($sql, array(":mhw" => $mhw, ":mpos" => $mpos, ":msub" => $msub));
+	  $this->_senseId = $result[0]["senseid"];
  	}
 
   public function getMhw() {
@@ -129,6 +139,18 @@ SQL;
 		}
 		return $slipInfo;
   }
+
+	/*
+ * Queries Meanma for sense info and returns an HTML list.
+ */
+	public function getSenseInfo() {
+		if ($this->getSenseId() == null) {
+			return "";
+		}
+		$url = "https://dasg.ac.uk/meanma/ajax.php?action=loadSenseData&id=" . $this->getSenseId();
+		$html = file_get_contents($url);
+		return $html;
+	}
 
   public function getCompounds() {
     return $this->_compounds;
@@ -175,6 +197,10 @@ SQL;
       default:
         return [$pos, $pos, $pos];
     }
+  }
+
+  public function getSenseId() {
+		return $this->_senseId;
   }
 
 }
