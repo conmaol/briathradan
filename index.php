@@ -68,7 +68,7 @@ echo <<<HTML
         <script>
             $(function () {
                 $('[data-bs-toggle="tooltip"]').tooltip();
-                $('.gaelic').hide(); // hide Gaelic search results for now
+                //$('.gaelic').hide(); // hide Gaelic search results for now
                 {$loadEntryJS}
             })
         </script>

@@ -44,22 +44,27 @@ HTML;
             $entriesEN = $this->_model->getEntriesEN();
 			$entriesGD = $this->_model->getEntriesGD();
 		    if (!(count($entriesEN)+count($entriesGD))) {
-			    echo '<p>Feuch a-rithist!</p></div>';
+			    echo '</form><p>Feuch a-rithist!</p></div>';
+				return;
 		    }
-		    else {
+		    else if (count($entriesEN) && count($entriesGD)) {
                 echo <<<HTML
         <div class="mb-3">
 	        <div class="form-check form-switch">
 		        <input class="form-check-input" type="checkbox" role="switch" id="gdSwitch" data-bs-toggle="tooltip" title="Switch language match"/>
 	        </div>
         </div>
+HTML;
+			}
+echo <<<HTML
 	</form>
 </div>
 <div class="list-group list-group-flush">
 HTML;
-                foreach ($entriesEN as $nextEntry) {
+            if (count($entriesEN)) {
+				foreach ($entriesEN as $nextEntry) {
 	                echo <<<HTML
-<a href="#" class="entryRow list-group-item list-group-item-action english"
+<a href="#" class="entryRow list-group-item list-group-item-action"
 		data-bs-toggle="modal" data-bs-target="#entryModal"
 		data-mhw="{$nextEntry[0]}" data-mpos="{$nextEntry[1]}" data-msub="{$nextEntry[2]}">
 	<strong>{$nextEntry[0]}</strong>
@@ -70,7 +75,7 @@ HTML;
                 }
 				foreach ($entriesGD as $nextEntry) {
 	                echo <<<HTML
-<a href="#" class="entryRow list-group-item list-group-item-action gaelic"
+<a href="#" class="entryRow list-group-item list-group-item-action" style="display:none;"
 		    data-bs-toggle="modal" data-bs-target="#entryModal"
 		    data-mhw="{$nextEntry[0]}" data-mpos="{$nextEntry[1]}" data-msub="{$nextEntry[2]}">
 	<strong>
@@ -79,8 +84,21 @@ HTML;
 	                echo '</strong> <em>' . models\entry::getPosInfo($nextEntry[1])[0] . '</em>';
 	                echo ' <span class="text-muted">' . search::_hi($nextEntry[3],$search) . '</span></a>';
                 }
-                echo '</div>';
-		    }
+			}
+			else {
+				foreach ($entriesGD as $nextEntry) {
+	                echo <<<HTML
+<a href="#" class="entryRow list-group-item list-group-item-action"
+		    data-bs-toggle="modal" data-bs-target="#entryModal"
+		    data-mhw="{$nextEntry[0]}" data-mpos="{$nextEntry[1]}" data-msub="{$nextEntry[2]}">
+	<strong>
+HTML;
+                    echo search::_hi($nextEntry[0],$search);
+	                echo '</strong> <em>' . models\entry::getPosInfo($nextEntry[1])[0] . '</em>';
+	                echo ' <span class="text-muted">' . search::_hi($nextEntry[3],$search) . '</span></a>';
+                }
+			}	
+            echo '</div>';
 	    }
 	}
 
