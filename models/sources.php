@@ -81,10 +81,11 @@ class sources {
         return '🌿';
         break;
       case "122":
-        return '‍✴️';
+        return '🐲';
         break;
       case "23":
-        return '♒️';
+        //return '♒️';
+		return '🏵️';
         break;
       case "223":
         return '✳️';

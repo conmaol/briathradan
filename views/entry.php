@@ -60,6 +60,7 @@ HTML;
 
 		}
 		// slips
+		/*
 	  if ($slips = $this->_model->getSlipInfo()) {
 			$html .= '<small><a data-toggle="collapse" href="#examples">[+/- eisimplearan]</a></small>';
 			$html .= '<div class="collapse list-group" id="examples">';
@@ -82,11 +83,11 @@ HTML;
       
 	//$html .= '[DISPLAY SENSE HERE]';
   $html .= $this->_model->getSenseInfo();
-
+    */
 	$html .= '</div>';
     $html .= <<<HTML
 		<div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">dùin</button>
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">dùin</button>
 		</div>
 HTML;
 		return $html;

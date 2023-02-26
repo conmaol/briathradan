@@ -10,9 +10,9 @@ class entry {
   private $_instances = array(); // an array of entry_instance models
   private $_parts = array();
   private $_compounds = array();
-  private $_slips = array();
-  private $_sense; // SENSE STRUCTURE, WITH CITATIONS
-	private $_senseId = null;
+  //private $_slips = array();
+  //private $_sense; // SENSE STRUCTURE, WITH CITATIONS
+	//private $_senseId = null;
   private $_db;   // an instance of models\database
 
 	public function __construct($mhw,$mpos,$msub,$db) {
@@ -81,6 +81,7 @@ SQL;
     foreach ($results as $nextResult) {
     	$this->_compounds[] = [$nextResult["m-hw"], $nextResult["m-pos"], $nextResult["m-sub"]];
     }
+    /*
     $sql = <<<SQL
 			SELECT `id`, `slipref`
 				FROM `slips`
@@ -102,6 +103,7 @@ SQL;
 SQL;
 	  $result = $this->_db->fetch($sql, array(":mhw" => $mhw, ":mpos" => $mpos, ":msub" => $msub));
 	  $this->_senseId = $result[0]["senseid"];
+    */
  	}
 
   public function getMhw() {
@@ -132,6 +134,7 @@ SQL;
    * Queries Meanma for slip info and returns a StdClass object for each slipId and its info in key value pairs.
    */
   public function getSlipInfo() {
+    //$slipInfo = [];
 		foreach ($this->getSlips() as $slipId) {
 			$url = "https://dasg.ac.uk/meanma/ajax.php?action=loadSlipData&groupId={$_SESSION["groupId"]}&id=" . $slipId;
 			$data = file_get_contents($url);
