@@ -30,10 +30,11 @@ $view->show();
  */
 $loadEntryJS = "";
 if (isset($_GET["mhw"])) {
+    $mhw = $_GET["mhw"];
     $mpos = isset($_GET["mpos"]) ? $_GET["mpos"] : '';
     $msub = isset($_GET["msub"]) ? $_GET["msub"] : '';
 	$loadEntryJS =  <<<JS
-let mhw = '{$_GET["mhw"]}';
+let mhw = '{$mhw}';
 let mpos = '{$mpos}';
 let msub = '{$msub}';
 writeEntry(mhw, mpos, msub);
