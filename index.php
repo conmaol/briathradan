@@ -29,20 +29,21 @@ $view->show();
  * Handle request in the URL to display an entry automatically on page load
  */
 $loadEntryJS = "";
-/*
 if (isset($_GET["mhw"])) {
+    $mpos = isset($_GET["mpos"]) ? $_GET["mpos"] : '';
+    $msub = isset($_GET["msub"]) ? $_GET["msub"] : '';
 	$loadEntryJS =  <<<JS
-		let mhw = '{$_GET["mhw"]}';
-	  let mpos = '{$_GET["mpos"]}';
-	  let msub = '{$_GET["msub"]}';
-	  writeEntry(mhw, mpos, msub);
+let mhw = '{$_GET["mhw"]}';
+let mpos = '{$mpos}';
+let msub = '{$msub}';
+writeEntry(mhw, mpos, msub);
 JS;
-} else if (isset($_GET["random"]) && $_GET["random"] == "yes") {
-	$loadEntryJS = <<<JS
-		writeEntry('', '', '');
-JS;
-}
-*/
+} 
+//else if (isset($_GET["random"]) && $_GET["random"] == "yes") {
+//	$loadEntryJS = <<<JS
+//		writeEntry('', '', '');
+//JS;
+//}
 
 echo <<<HTML
             <nav class="navbar navbar-dark bg-primary fixed-bottom navbar-expand-lg">

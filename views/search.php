@@ -32,10 +32,10 @@ HTML;
     <hr/>
     <p>
     Stòr fhaclan agus abairtean, le pailteas thar-iomraidhean agus eisimpleirean.
-	Air a dheasachadh leis <del>a’ Mhaoilean</del>, le taic bho <a href="https://dasg.ac.uk" target="_new">DhASG</a>, 
+	Le taic bho <a href="https://dasg.ac.uk" target="_new">DhASG</a>, 
 	bho <a href="http://www.soillse.ac.uk" target="_new">Shoillse</a>, agus
 	bho <a href="https://www.gaidhlig.scot" target="_new">Bhòrd na Gàidhlig</a>.
-	Beachd thugainn: <code>Mark.McConville@glasgow.ac.uk</code>
+	Beachd thugainn – <code>Mark.McConville@glasgow.ac.uk</code>
     </p>
 </div>
 HTML;
@@ -51,7 +51,7 @@ HTML;
                 echo <<<HTML
         <div class="mb-3">
 	        <div class="form-check form-switch">
-		        <input class="form-check-input" type="checkbox" role="switch" id="gdSwitch" data-bs-toggle="tooltip" title="Switch language match"/>
+		        <input class="form-check-input" type="checkbox" role="switch" id="gdSwitch" data-bs-toggle="tooltip" title="Switch language"/>
 	        </div>
         </div>
 HTML;

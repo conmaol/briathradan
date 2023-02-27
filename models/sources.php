@@ -38,22 +38,22 @@ class sources {
   public static function getRef($id) {
     switch ($id) {
     	case "101":
-    		return 'Briathran eaglaiseil (Eaglais na h-Alba, Am Bìoball)';
+    		return 'Eaglais na h-Alba';
     		break;
       case "102":
-      	return 'Briathran airson rianachd poblaich (Faclair na Pàrlamaid, Faclair Rianachd Phoblaich)';
+      	return 'Rianachd poblaich (Faclair na Pàrlamaid, Faclair Rianachd Phoblaich)';
       	break;
       case "103":
-      	return 'Briathran airson sgoiltean (Stòrlann, Foghlam Alba)';
+      	return 'Sgoiltean (Stòrlann, Foghlam Alba)';
       	break;
       case "104":
-      	return 'Briathran à Buidhinn Nàdair na h-Alba';
+      	return 'Buidheann Nàdair na h-Alba';
       	break;
     	case "122":
-    		return 'Briathran à Dwelly – Faclair Gàidhlig gu Beurla le Dealbhan';
+    		return 'Dwelly – Faclair Gàidhlig gu Beurla le Dealbhan';
     		break;
     	case "23":
-    		return 'Briathran à stòr Lexicopia';
+    		return 'Stòr DASG';
     		break;
       case "223":
       	return 'Roghainnean eile';
