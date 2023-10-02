@@ -51,7 +51,8 @@ HTML;
                 echo <<<HTML
         <div class="mb-3">
 	        <div class="form-check form-switch">
-		        <input class="form-check-input" type="checkbox" role="switch" id="gdSwitch" data-bs-toggle="tooltip" title="Switch language"/>
+		        <input class="form-check-input" type="checkbox" role="switch" id="gdSwitch"/> <!--  data-bs-toggle="tooltip" title="Switch language" -->
+				<label class="form-check-label" for="inlineCheckbox1gdSwitch"><small>Gàidhlig</small></label> <!-- HMMMMM-->
 	        </div>
         </div>
 HTML;
