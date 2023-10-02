@@ -35,8 +35,18 @@ HTML;
 	Le taic bho <a href="https://dasg.ac.uk" target="_new">DhASG</a>, 
 	bho <a href="http://www.soillse.ac.uk" target="_new">Shoillse</a>, agus
 	bho <a href="https://www.gaidhlig.scot" target="_new">Bhòrd na Gàidhlig</a>.
-	Beachd thugainn – <code>Mark.McConville@glasgow.ac.uk</code>
+	Beachd thugainn – <code>fios@dasg.ac.uk</code>
     </p>
+    <p>
+    Tha briathrachas air a ghabhail a-steach às na goireasan poblach sònraichte seo –
+    <ul>
+      <li>⛪️ – <a target="_new" href="https://www.churchofscotland.org.uk/__data/assets/pdf_file/0011/68708/ER-Gaelic-HANDBOOK-V5.pdf">Eaglais na h-Alba</a>️</li>
+      <li>🗳 – Faclair na Pàrlamaid, Faclair Rianachd Phoblaich, <a target="_new" href="https://www.cne-siar.gov.uk/media/4714/gaelicenglish.pdf">Faclair airson Riaghaltas Ionadail</a></li>
+      <li>🧒🏻 – <a target="_new" href="https://www.anseotal.org.uk/en/">Stòrlann</a>, Foghlam Alba</li>
+      <li>🌿 – <a href="https://www.nature.scot/about-naturescot/access-information-and-services/faclan-nadair" target="_new">Buidheann Nàdair na h-Alba</a></li>
+    </ul>
+    </p>
+    
 </div>
 HTML;
         }
