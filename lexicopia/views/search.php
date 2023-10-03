@@ -62,27 +62,26 @@ HTML;
                 }
 				foreach ($entriesGD as $nextEntry) {
 	                echo <<<HTML
-<a href="#" class="entryRow list-group-item list-group-item-action" style="display:none;"
-		    data-bs-toggle="modal" data-bs-target="#entryModal"
-		    data-mhw="{$nextEntry[0]}" data-mpos="{$nextEntry[1]}" data-msub="{$nextEntry[2]}">
+<a href="#" class="entryRow list-group-item list-group-item-action" style="display:none;" data-bs-toggle="modal" data-bs-target="#entryModal" data-id="{$nextEntry[0]}" title="{$nextEntry[0]}">
 	<strong>
 HTML;
-                    echo search::_hi($nextEntry[0],$search);
-	                echo '</strong> <em>' . models\entry::getPosInfo($nextEntry[1])[0] . '</em>';
-	                echo ' <span class="text-muted">' . search::_hi($nextEntry[3],$search) . '</span></a>';
+                    echo search::_hi($nextEntry[1],$search);
+	                echo '</strong> <em>' . models\entry::getPosInfo($nextEntry[2])[0] . '</em>';
+	                //echo ' <span class="text-muted">' . search::_hi($nextEntry[3],$search) . '</span></a>';
+	                echo '</a>';
                 }
 			}
 			else { // no English results
 				foreach ($entriesGD as $nextEntry) {
 	                echo <<<HTML
-<a href="#" class="entryRow list-group-item list-group-item-action"
-		    data-bs-toggle="modal" data-bs-target="#entryModal"
-		    data-mhw="{$nextEntry[0]}" data-mpos="{$nextEntry[1]}" data-msub="{$nextEntry[2]}">
+<a href="#" class="entryRow list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#entryModal"
+		    data-id="{$nextEntry[0]}" title="{$nextEntry[0]}">
 	<strong>
 HTML;
-                    echo search::_hi($nextEntry[0],$search);
-	                echo '</strong> <em>' . models\entry::getPosInfo($nextEntry[1])[0] . '</em>';
-	                echo ' <span class="text-muted">' . search::_hi($nextEntry[3],$search) . '</span></a>';
+                    echo search::_hi($nextEntry[1],$search);
+	                echo '</strong> <em>' . models\entry::getPosInfo($nextEntry[2])[0] . '</em>';
+	                //echo ' <span class="text-muted">' . search::_hi($nextEntry[3],$search) . '</span></a>';
+	                echo '</a>';
                 }
 			}	
             echo '</div>';
