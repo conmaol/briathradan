@@ -5,11 +5,11 @@ use models;
 
 class search {
 
-	private $_model;   // an instance of models\search
+    private $_model;   // an instance of models\search
 
-	public function __construct($model) {
-		$this->_model = $model;
-	}
+    public function __construct($model) {
+	    $this->_model = $model;
+    }
 
 	public function show() {
 		$search = $this->_model->getSearch();
@@ -27,49 +27,38 @@ class search {
         </div>
 HTML;
         if ($search=='') { // default homepage
-			echo <<<HTML
-    </form>
-    <hr/>
-    <p>
-    Blah.
-    </p>
-    </div>
-HTML;
+			echo '</form><hr/><p>Blah.</p></div>';
         }
-    else {
-          $entriesEN = $this->_model->getEntriesEN();
-          $entriesGD = $this->_model->getEntriesGD();
-          if (!(count($entriesEN)+count($entriesGD))) { // no results
-	    echo '</form><p>Feuch a-rithist!</p></div>';
-	    return;
-          }
-	else if (count($entriesEN) && count($entriesGD)) { // both languages
+        else {
+            $entriesEN = $this->_model->getEntriesEN();
+            $entriesGD = $this->_model->getEntriesGD();
+            if (!(count($entriesEN)+count($entriesGD))) { // no results
+	            echo '</form><p>No results – try again.</p></div>';
+	            return;
+            }
+	        else if (count($entriesEN) && count($entriesGD)) { // both languages
                 echo <<<HTML
-        <div class="mb-3">
-	        <div class="form-check form-switch">
-		        <input class="form-check-input" type="checkbox" role="switch" id="gdSwitch" data-bs-toggle="tooltip" title="Switch language"/>
-		  <!-- <label class="form-check-label" for="inlineCheckbox1gdSwitch"><small>Gàidhlig</small></label> -->
-	        </div>
-        </div>
+<div class="mb-3">
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="gdSwitch" data-bs-toggle="tooltip" title="Switch language"/>
+	</div>
+</div>
 HTML;
-	}
-echo <<<HTML
+	        }
+            echo <<<HTML
 	</form>
 </div>
-
 <div class="list-group list-group-flush">
 HTML;
             if (count($entriesEN)) {
-				foreach ($entriesEN as $nextEntry) {
+			    foreach ($entriesEN as $nextEntry) {
 	                echo <<<HTML
-<a href="#" class="entryRow list-group-item list-group-item-action"
-		data-bs-toggle="modal" data-bs-target="#entryModal"
-		data-id="{$nextEntry[0]}" title="{$nextEntry[0]}">
+<a href="#" class="entryRow list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#entryModal" data-id="{$nextEntry[0]}" title="{$nextEntry[0]}">
 	<strong>{$nextEntry[1]}</strong>
-	<em>
+	<em><span class="text-muted">
 HTML;
 	                echo models\entry::getPosInfo($nextEntry[2])[0];
-	                echo '</em> <span class="text-muted">' . search::_hi($nextEntry[3],$search) . '</span></a>';
+	                echo '</span></em> <span class="text-muted">' . search::_hi($nextEntry[3],$search) . '</span></a>';
                 }
 				foreach ($entriesGD as $nextEntry) {
 	                echo <<<HTML
@@ -83,7 +72,7 @@ HTML;
 	                echo ' <span class="text-muted">' . search::_hi($nextEntry[3],$search) . '</span></a>';
                 }
 			}
-			else {
+			else { // no English results
 				foreach ($entriesGD as $nextEntry) {
 	                echo <<<HTML
 <a href="#" class="entryRow list-group-item list-group-item-action"

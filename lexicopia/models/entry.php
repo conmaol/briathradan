@@ -119,35 +119,6 @@ SQL;
     return $this->_parts;
   }
 
-  public function getSlips() {
-		return $this->_slips;
-  }
-
-  /*
-   * Queries Meanma for slip info and returns a StdClass object for each slipId and its info in key value pairs.
-   */
-  public function getSlipInfo() {
-    //$slipInfo = [];
-		foreach ($this->getSlips() as $slipId) {
-			$url = "https://dasg.ac.uk/meanma/ajax.php?action=loadSlipData&groupId={$_SESSION["groupId"]}&id=" . $slipId;
-			$data = file_get_contents($url);
-			$slipInfo[$slipId] = json_decode($data);
-		}
-		return $slipInfo;
-  }
-
-	/*
- * Queries Meanma for sense info and returns an HTML list.
- */
-	public function getSenseInfo() {
-		if ($this->getSenseId() == null) {
-			return "";
-		}
-		$url = "https://dasg.ac.uk/meanma/ajax.php?action=loadSenseData&id=" . $this->getSenseId();
-		$html = file_get_contents($url);
-		return $html;
-	}
-
   public function getCompounds() {
     return $this->_compounds;
   }
@@ -155,10 +126,10 @@ SQL;
   public static function getPosInfo($pos) {
     switch ($pos) {
       case "m":
-        return ['fir.', 'ainmear fireann', 'masculine noun'];
+        return ['masc.', 'ainmear fireann', 'masculine noun'];
         break;
       case "f":
-        return ['boir.', 'ainmear boireann', 'feminine noun'];
+        return ['fem.', 'ainmear boireann', 'feminine noun'];
         break;
       case "ff":
         return ['boir.', 'ainm boireann', 'feminine proper noun'];
@@ -170,10 +141,10 @@ SQL;
         return ['ainm.', 'ainmear (fireann/boireann)', 'noun (masculine/feminine)'];
         break;
       case "v":
-        return ['gn.', 'gnìomhair', 'verb'];
+        return ['vb.', 'gnìomhair', 'verb'];
         break;
       case "a":
-        return ['bua.', 'buadhair', 'adjective'];
+        return ['adj.', 'buadhair', 'adjective'];
         break;
       case "p":
         return ['roi.', 'roimhear', 'preposition'];
@@ -193,10 +164,6 @@ SQL;
       default:
         return [$pos, $pos, $pos];
     }
-  }
-
-  public function getSenseId() {
-		return $this->_senseId;
   }
 
 }

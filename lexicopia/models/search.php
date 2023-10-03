@@ -4,24 +4,25 @@ namespace models;
 
 class search {
 
-  private $_search = ""; // the search term
-  private $_entriesEN = array(); // an array of id-hw-pos-en 4-tuples
-  private $_entriesGD = array(); // an array of id-hw-pos-sub-althw+form 4-tuples ???
-  private $_db;   // an instance of models\database
+    private $_search = ""; // the search term
+    private $_entriesEN = array(); // an array of id-hw-pos-en 4-tuples
+    private $_entriesGD = array(); // an array of id-hw-pos-sub-althw+form 4-tuples ???
+    private $_db;   // an instance of models\database
 
-  public function __construct() {
-    if (isset($_GET["search"])) {
-      $this->_search = $_GET["search"];
-      $this->_db = isset($this->_db) ? $this->_db : new database();
-      $this->_load();
+    public function __construct() {
+        if (isset($_GET["search"])) {
+            $this->_search = $_GET["search"];
+            $this->_db = isset($this->_db) ? $this->_db : new database();
+            $this->_load();
+        }
     }
-  }
 
-  private function _load() {
-    $results = [];
-    $results = $this->_englishExactSearch();
+    private function _load() {
+        $results = [];
+        $results = $this->_englishExactSearch();
+        $results = array_merge($results,$this->_englishPrefixSpaceSearch());
+    
     /*
-    $results = array_merge($results,$this->_englishPrefixSpaceSearch());
     $results = array_merge($results,$this->_englishSuffixSpaceSearch());
     $results = array_merge($results,$this->_englishInfixSpaceBothSearch());
     if (count($results)<100) {
@@ -37,9 +38,9 @@ class search {
       $results = array_merge($results,$this->_englishInfixSpaceRightSearch());
     }
     */
-  	foreach ($results as $nextResult) {
-  		$this->_entriesEN[] = explode('|',$nextResult);
-  	}
+  	  foreach ($results as $nextResult) {
+  		  $this->_entriesEN[] = explode('|',$nextResult);
+  	  }
   	/*
     $results = [];
     $results = $this->_gaelicExactHwSearch();
@@ -67,37 +68,37 @@ class search {
     */
 	}
 
-  private function _englishExactSearch() {
-    $sql = <<<SQL
-    SELECT e.id, hw, pos, t.text
-      FROM entry e
-      JOIN translation t ON e.id = t.entryid
-      WHERE t.text = :en
-      ORDER BY hw
+    private function _englishExactSearch() {
+        $sql = <<<SQL
+SELECT e.id, hw, pos, t.text
+FROM entry e
+JOIN translation t ON e.id = t.entryid
+WHERE t.text = :en
+ORDER BY hw
 SQL;
-    $results = $this->_db->fetch($sql, array(":en" => $this->_search));
-    $oot = [];
-    foreach ($results as $nextResult) {
-      $oot[] = $nextResult["id"] . '|' . $nextResult["hw"] . '|'. $nextResult["pos"] . '|' . $nextResult["text"];
+        $results = $this->_db->fetch($sql, array(":en" => $this->_search));
+        $oot = [];
+        foreach ($results as $nextResult) {
+            $oot[] = $nextResult["id"] . '|' . $nextResult["hw"] . '|'. $nextResult["pos"] . '|' . $nextResult["text"];
+        }
+        return $oot;
     }
-    return $oot;
-  }
 
-  private function _englishPrefixSpaceSearch() {
-    $sql = <<<SQL
-    SELECT DISTINCT `m-hw`, `m-pos`, `m-sub`, e.`en`
-      FROM `lexemes` l
-      JOIN `english` e ON l.`id` = e.`lexeme_id`
-      WHERE e.`en` REGEXP :en
-      ORDER BY LENGTH(`m-hw`), `m-hw`
+    private function _englishPrefixSpaceSearch() {
+        $sql = <<<SQL
+SELECT e.id, hw, pos, t.text
+FROM entry e
+JOIN translation t ON e.id = t.entryid
+WHERE t.text REGEXP :en
+ORDER BY LENGTH(hw), hw
 SQL;
-    $results = $this->_db->fetch($sql, array(":en" => '^' . $this->_search . '[ -].*'));
-    $oot = [];
-    foreach ($results as $nextResult) {
-      $oot[] = $nextResult["m-hw"] . '|' . $nextResult["m-pos"] . '|'. $nextResult["m-sub"] . '|' . $nextResult["en"];
+        $results = $this->_db->fetch($sql, array(":en" => '^' . $this->_search . '[ -].*'));
+        $oot = [];
+        foreach ($results as $nextResult) {
+            $oot[] = $nextResult["id"] . '|' . $nextResult["hw"] . '|'. $nextResult["pos"] . '|' . $nextResult["text"];
+        }
+        return $oot;
     }
-    return $oot;
-  }
 
   private function _englishSuffixSpaceSearch() {
     $sql = <<<SQL
