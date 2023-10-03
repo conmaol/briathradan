@@ -5,8 +5,8 @@ namespace models;
 class search {
 
   private $_search = ""; // the search term
-  private $_entriesEN = array(); // an array of hw-pos-sub-en 4-tuples
-  private $_entriesGD = array(); // an array of hw-pos-sub-althw+form 4-tuples
+  private $_entriesEN = array(); // an array of id-hw-pos-en 4-tuples
+  private $_entriesGD = array(); // an array of id-hw-pos-sub-althw+form 4-tuples ???
   private $_db;   // an instance of models\database
 
   public function __construct() {
@@ -20,6 +20,7 @@ class search {
   private function _load() {
     $results = [];
     $results = $this->_englishExactSearch();
+    /*
     $results = array_merge($results,$this->_englishPrefixSpaceSearch());
     $results = array_merge($results,$this->_englishSuffixSpaceSearch());
     $results = array_merge($results,$this->_englishInfixSpaceBothSearch());
@@ -35,9 +36,11 @@ class search {
     if (count($results)<100) {
       $results = array_merge($results,$this->_englishInfixSpaceRightSearch());
     }
-    foreach ($results as $nextResult) {
-  	$this->_entriesEN[] = explode('|',$nextResult);
-    }
+    */
+  	foreach ($results as $nextResult) {
+  		$this->_entriesEN[] = explode('|',$nextResult);
+  	}
+  	/*
     $results = [];
     $results = $this->_gaelicExactHwSearch();
     $results = array_merge($results,$this->_gaelicExactFormSearch());
@@ -61,20 +64,21 @@ class search {
     foreach ($results as $nextResult) {
       $this->_entriesGD[] = explode('|',$nextResult);
     }
+    */
 	}
 
   private function _englishExactSearch() {
     $sql = <<<SQL
-    SELECT DISTINCT `m-hw`, `m-pos`, `m-sub`, e.`en`
-      FROM `lexemes` l
-      JOIN `english` e ON l.`id` = e.`lexeme_id`
-      WHERE e.`en` = :en
-      ORDER BY `m-hw`
+    SELECT e.id, hw, pos, t.text
+      FROM entry e
+      JOIN translation t ON e.id = t.entryid
+      WHERE t.text = :en
+      ORDER BY hw
 SQL;
     $results = $this->_db->fetch($sql, array(":en" => $this->_search));
     $oot = [];
     foreach ($results as $nextResult) {
-      $oot[] = $nextResult["m-hw"] . '|' . $nextResult["m-pos"] . '|'. $nextResult["m-sub"] . '|' . $nextResult["en"];
+      $oot[] = $nextResult["id"] . '|' . $nextResult["hw"] . '|'. $nextResult["pos"] . '|' . $nextResult["text"];
     }
     return $oot;
   }

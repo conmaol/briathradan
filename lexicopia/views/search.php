@@ -5,7 +5,7 @@ use models;
 
 class search {
 
-	private $_model;   // an instance of models\entries
+	private $_model;   // an instance of models\search
 
 	public function __construct($model) {
 		$this->_model = $model;
@@ -31,45 +31,32 @@ HTML;
     </form>
     <hr/>
     <p>
-    Stòr fhaclan agus abairtean, le pailteas thar-iomraidhean agus eisimpleirean.
-	Le taic bho <a href="https://dasg.ac.uk" target="_new">DhASG</a>, 
-	bho <a href="http://www.soillse.ac.uk" target="_new">Shoillse</a>, agus
-	bho <a href="https://www.gaidhlig.scot" target="_new">Bhòrd na Gàidhlig</a>.
-	Beachd thugainn – <code>fios@dasg.ac.uk</code>
+    Blah.
     </p>
-    <p>
-    Tha briathrachas air a ghabhail a-steach às na goireasan poblach sònraichte seo –
-    <ul>
-      <li>⛪️ – <a target="_new" href="https://www.churchofscotland.org.uk/__data/assets/pdf_file/0011/68708/ER-Gaelic-HANDBOOK-V5.pdf">Eaglais na h-Alba</a>️</li>
-      <li>🗳 – Faclair na Pàrlamaid, Faclair Rianachd Phoblaich, <a target="_new" href="https://www.cne-siar.gov.uk/media/4714/gaelicenglish.pdf">Faclair airson Riaghaltas Ionadail</a></li>
-      <li>🧒🏻 – <a target="_new" href="https://www.anseotal.org.uk/en/">Stòrlann</a>, Foghlam Alba</li>
-      <li>🌿 – <a href="https://www.nature.scot/about-naturescot/access-information-and-services/faclan-nadair" target="_new">Buidheann Nàdair na h-Alba</a></li>
-    </ul>
-    </p>
-    <p></p>
-</div>
+    </div>
 HTML;
         }
-		else {
-            $entriesEN = $this->_model->getEntriesEN();
-			$entriesGD = $this->_model->getEntriesGD();
-		    if (!(count($entriesEN)+count($entriesGD))) {
-			    echo '</form><p>Feuch a-rithist!</p></div>';
-				return;
-		    }
-		    else if (count($entriesEN) && count($entriesGD)) {
+    else {
+          $entriesEN = $this->_model->getEntriesEN();
+          $entriesGD = $this->_model->getEntriesGD();
+          if (!(count($entriesEN)+count($entriesGD))) { // no results
+	    echo '</form><p>Feuch a-rithist!</p></div>';
+	    return;
+          }
+	else if (count($entriesEN) && count($entriesGD)) { // both languages
                 echo <<<HTML
         <div class="mb-3">
 	        <div class="form-check form-switch">
 		        <input class="form-check-input" type="checkbox" role="switch" id="gdSwitch" data-bs-toggle="tooltip" title="Switch language"/>
-				<!-- <label class="form-check-label" for="inlineCheckbox1gdSwitch"><small>Gàidhlig</small></label> -->
+		  <!-- <label class="form-check-label" for="inlineCheckbox1gdSwitch"><small>Gàidhlig</small></label> -->
 	        </div>
         </div>
 HTML;
-			}
+	}
 echo <<<HTML
 	</form>
 </div>
+
 <div class="list-group list-group-flush">
 HTML;
             if (count($entriesEN)) {
@@ -77,11 +64,11 @@ HTML;
 	                echo <<<HTML
 <a href="#" class="entryRow list-group-item list-group-item-action"
 		data-bs-toggle="modal" data-bs-target="#entryModal"
-		data-mhw="{$nextEntry[0]}" data-mpos="{$nextEntry[1]}" data-msub="{$nextEntry[2]}">
-	<strong>{$nextEntry[0]}</strong>
+		data-id="{$nextEntry[0]}" title="{$nextEntry[0]}">
+	<strong>{$nextEntry[1]}</strong>
 	<em>
 HTML;
-	                echo models\entry::getPosInfo($nextEntry[1])[0];
+	                echo models\entry::getPosInfo($nextEntry[2])[0];
 	                echo '</em> <span class="text-muted">' . search::_hi($nextEntry[3],$search) . '</span></a>';
                 }
 				foreach ($entriesGD as $nextEntry) {
