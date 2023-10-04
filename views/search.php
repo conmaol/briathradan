@@ -35,7 +35,7 @@ HTML;
 	Le taic bho <a href="https://dasg.ac.uk" target="_new">DhASG</a>, 
 	bho <a href="http://www.soillse.ac.uk" target="_new">Shoillse</a>, agus
 	bho <a href="https://www.gaidhlig.scot" target="_new">Bhòrd na Gàidhlig</a>.
-	Beachd thugainn – <code>fios@dasg.ac.uk</code>
+	Beachd thugainn – <code>mail@dasg.ac.uk</code>
     </p>
     <p>
     Tha briathrachas air a ghabhail a-steach às na goireasan poblach sònraichte seo –
