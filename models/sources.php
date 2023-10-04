@@ -18,6 +18,9 @@ class sources {
       case "104":
       	return 'Nàdar';
       	break;
+      case "105":
+      	return 'SMO';
+      	break;
     	case "122":
     		return 'Dwelly';
     		break;
@@ -49,6 +52,9 @@ class sources {
       case "104":
       	return 'Buidheann Nàdair na h-Alba';
       	break;
+      case "105":
+      	return 'An Stòr-Dàta';
+      	break;
     	case "122":
     		return 'Dwelly – Faclair Gàidhlig gu Beurla le Dealbhan';
     		break;
@@ -79,6 +85,9 @@ class sources {
         break;
       case "104":
         return '🌿';
+        break;
+      case "105":
+        return '🏫';
         break;
       case "122":
         return '🐲';

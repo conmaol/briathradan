@@ -18,19 +18,22 @@ class sources {
       case "104":
       	return 'Nàdar';
       	break;
-    	case "122":
-    		return 'Dwelly';
-    		break;
-    	case "23":
-    		return '';
-    		break;
+      case "105":
+      	return 'SMO';
+      	break;
+      case "122":
+    	return 'Dwelly';
+    	break;
+      case "23":
+    	return '';
+    	break;
       case "223":
       	return 'ALT-LXCP';
       	break;
       case "323":
       	return 'EX-LXCP';
       	break;
-    	default:
+      default:
     		return '[unknown]';
     }
 	}
@@ -49,10 +52,13 @@ class sources {
       case "104":
       	return 'Buidheann Nàdair na h-Alba';
       	break;
-    	case "122":
+      case "105":
+      	return 'An Stòr-Dàta';
+      	break;
+      case "122":
     		return 'Dwelly – Faclair Gàidhlig gu Beurla le Dealbhan';
     		break;
-    	case "23":
+      case "23":
     		return 'Stòr DASG';
     		break;
       case "223":
@@ -79,6 +85,9 @@ class sources {
         break;
       case "104":
         return '🌿';
+        break;
+      case "105":
+        return '🏫';
         break;
       case "122":
         return '🐲';
