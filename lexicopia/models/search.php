@@ -35,6 +35,7 @@ class search {
         if (count($results)<100) {
             $results = array_merge($results,$this->_englishInfixSpaceRightSearch());
         }
+        // infix no space on either wide ??
   	  foreach ($results as $nextResult) {
   		  $this->_entriesEN[] = explode('|',$nextResult);
   	  }
@@ -45,25 +46,22 @@ class search {
     $results = array_merge($results,$this->_gaelicExactFormSearch());
     */
         $results = array_merge($results,$this->_gaelicPrefixHwSpaceSearch());
-        $results = array_merge($results,$this->_gaelicSuffixHwSpaceSearch());
-    //$results = array_merge($results,$this->_gaelicInfixHwSpaceBothSearch());
-    
-    /*
-    if (count($results)<100) {
-      $results = array_merge($results,$this->_gaelicPrefixHwNoSpaceSearch());
-    }
-    if (count($results)<100) {
-      $results = array_merge($results,$this->_gaelicSuffixHwNoSpaceSearch());
-    }
-    if (count($results)<100) {
-      $results = array_merge($results,$this->_gaelicInfixHwSpaceLeftSearch());
-    }
-    if (count($results)<100) {
-      $results = array_merge($results,$this->_gaelicInfixHwSpaceRightSearch());
-    }
-    // GD forms as infixes etc??
-    // GD lenition on suffixes and infixes??
-    */
+        $results = array_merge($results,$this->_gaelicSuffixHwSpaceSearch()); // lenited ??
+        $results = array_merge($results,$this->_gaelicInfixHwSpaceBothSearch());
+        if (count($results)<100) {
+            $results = array_merge($results,$this->_gaelicPrefixHwNoSpaceSearch());
+        }
+        if (count($results)<100) {
+            $results = array_merge($results,$this->_gaelicSuffixHwNoSpaceSearch());
+        }
+        if (count($results)<100) {
+            $results = array_merge($results,$this->_gaelicInfixHwSpaceLeftSearch());
+        }
+        if (count($results)<100) {
+            $results = array_merge($results,$this->_gaelicInfixHwSpaceRightSearch());
+        }
+        // GD forms as infixes etc??
+        // GD lenition on suffixes and infixes??
         foreach ($results as $nextResult) {
             $this->_entriesGD[] = explode('|',$nextResult);
         }
@@ -263,84 +261,73 @@ SQL;
         return $oot;
     }
 
-  
-  /*
-  private function _gaelicInfixHwSpaceBothSearch() {
-    $sql = <<<SQL
-    SELECT DISTINCT `m-hw`, `m-pos`, `m-sub`, `hw`
-      FROM `lexemes`
-      WHERE `hw` LIKE :gd1 OR `hw` LIKE :gd2 OR `hw` LIKE :gd3 OR `hw` LIKE :gd4
-      ORDER BY LENGTH(`m-hw`), `m-hw`
+    private function _gaelicInfixHwSpaceBothSearch() {
+        $sql = <<<SQL
+SELECT id, hw, pos
+FROM entry
+WHERE hw LIKE :gd1 OR hw LIKE :gd2 OR hw LIKE :gd3 OR hw LIKE :gd4
+ORDER BY LENGTH(hw), hw
 SQL;
-    $results = $this->_db->fetch($sql,
-      array(":gd1" => '% ' . $this->_search . ' %',
-            ":gd2" => '%-' . $this->_search . ' %',
-            ":gd3" => '% ' . $this->_search . '-%',
-            ":gd4" => '%-' . $this->_search . '-%'
+        $results = $this->_db->fetch($sql,
+            array(":gd1" => '% ' . $this->_search . ' %',
+                  ":gd2" => '%-' . $this->_search . ' %',
+                  ":gd3" => '% ' . $this->_search . '-%',
+                  ":gd4" => '%-' . $this->_search . '-%'
           ));
-    $oot = [];
-    foreach ($results as $nextResult) {
-      $str = $nextResult["m-hw"] . '|' . $nextResult["m-pos"] . '|'. $nextResult["m-sub"] . '|';
-      if ($nextResult["hw"]!=$nextResult["m-hw"]) { $str .= $nextResult["hw"]; }
-      $oot[] = $str;
+        $oot = [];
+        foreach ($results as $nextResult) {
+            $str = $nextResult["id"] . '|' . $nextResult["hw"] . '|'. $nextResult["pos"];
+            $oot[] = $str;
+        }
+        return $oot;
     }
-    return $oot;
-  }
-  */
 
-/*
-  private function _gaelicPrefixHwNoSpaceSearch() {
-    $sql = <<<SQL
-    SELECT DISTINCT `m-hw`, `m-pos`, `m-sub`, `hw`
-      FROM `lexemes`
-      WHERE `hw` LIKE :gd1 AND `hw` NOT LIKE :gd2 AND `hw` NOT LIKE :gd3 AND `hw` != :gd4
-      ORDER BY LENGTH(`m-hw`), `m-hw`
+    private function _gaelicPrefixHwNoSpaceSearch() {
+        $sql = <<<SQL
+SELECT id, hw, pos
+FROM entry
+WHERE hw LIKE :gd1 AND hw NOT LIKE :gd2 AND hw NOT LIKE :gd3 AND hw != :gd4
+ORDER BY LENGTH(hw), hw
 SQL;
-    $results = $this->_db->fetch($sql, array(":gd1" => $this->_search . '%',
-                                             ":gd2" => $this->_search . ' %',
-                                             ":gd3" => $this->_search . '-%',
-                                             ":gd4" => $this->_search));
-    $oot = [];
-    foreach ($results as $nextResult) {
-      $str = $nextResult["m-hw"] . '|' . $nextResult["m-pos"] . '|'. $nextResult["m-sub"] . '|';
-      if ($nextResult["hw"]!=$nextResult["m-hw"]) { $str .= $nextResult["hw"]; }
-      $oot[] = $str;
+        $results = $this->_db->fetch($sql, array(":gd1" => $this->_search . '%',
+                                                 ":gd2" => $this->_search . ' %',
+                                                 ":gd3" => $this->_search . '-%',
+                                                 ":gd4" => $this->_search));
+        $oot = [];
+        foreach ($results as $nextResult) {
+            $str = $nextResult["id"] . '|' . $nextResult["hw"] . '|'. $nextResult["pos"];
+            $oot[] = $str;
+        }
+        return $oot;
     }
-    return $oot;
-  }
-*/
 
-/*
-  private function _gaelicSuffixHwNoSpaceSearch() {
-    $sql = <<<SQL
-    SELECT DISTINCT `m-hw`, `m-pos`, `m-sub`, `hw`
-      FROM `lexemes`
-      WHERE `hw` LIKE :gd1 AND `hw` NOT LIKE :gd2 AND `hw` NOT LIKE :gd3 AND `hw` != :gd4
-      ORDER BY LENGTH(`m-hw`), `m-hw`
+    private function _gaelicSuffixHwNoSpaceSearch() {
+        $sql = <<<SQL
+SELECT id, hw, pos
+FROM entry
+WHERE hw LIKE :gd1 AND hw NOT LIKE :gd2 AND hw NOT LIKE :gd3 AND hw != :gd4
+ORDER BY LENGTH(hw), hw
 SQL;
-    $results = $this->_db->fetch($sql, array(":gd1" => '%' . $this->_search,
-                                             ":gd2" => '% ' . $this->_search,
-                                             ":gd3" => '%-' . $this->_search,
-                                             ":gd4" => $this->_search));
-    $oot = [];
-    foreach ($results as $nextResult) {
-      $str = $nextResult["m-hw"] . '|' . $nextResult["m-pos"] . '|'. $nextResult["m-sub"] . '|';
-      if ($nextResult["hw"]!=$nextResult["m-hw"]) { $str .= $nextResult["hw"]; }
-      $oot[] = $str;
+        $results = $this->_db->fetch($sql, array(":gd1" => '%' . $this->_search,
+                                                 ":gd2" => '% ' . $this->_search,
+                                                 ":gd3" => '%-' . $this->_search,
+                                                 ":gd4" => $this->_search));
+        $oot = [];
+        foreach ($results as $nextResult) {
+            $str = $nextResult["id"] . '|' . $nextResult["hw"] . '|'. $nextResult["pos"];
+            $oot[] = $str;
+        }
+        return $oot;
     }
-    return $oot;
-  }
-  */
 
-/*
-  private function _gaelicInfixHwSpaceLeftSearch() {
-    $sql = <<<SQL
-    SELECT DISTINCT `m-hw`, `m-pos`, `m-sub`, `hw`
-      FROM `lexemes`
-      WHERE (`hw` LIKE :gd1 OR `hw` LIKE :gd2) AND `hw` NOT LIKE :gd3 AND `hw` NOT LIKE :gd4 AND `hw` NOT LIKE :gd5 AND `hw` NOT LIKE :gd6 AND `hw` NOT LIKE :gd7
-      ORDER BY LENGTH(`m-hw`), `m-hw`
+    private function _gaelicInfixHwSpaceLeftSearch() {
+        $sql = <<<SQL
+SELECT id, hw, pos
+FROM entry
+WHERE (hw LIKE :gd1 OR hw LIKE :gd2) AND hw NOT LIKE :gd3 AND hw NOT LIKE :gd4 AND hw NOT LIKE :gd5 AND hw NOT LIKE :gd6 AND hw NOT LIKE :gd7
+ORDER BY LENGTH(hw), hw
 SQL;
-    $results = $this->_db->fetch($sql, array(":gd1" => '% ' . $this->_search . '%',
+        $results = $this->_db->fetch($sql, array(":gd1" => '% ' . $this->_search . '%',
                                              ":gd2" => '%-' . $this->_search . '%',
                                              ":gd3" => '% ' . $this->_search . ' %',
                                              ":gd4" => '% ' . $this->_search . '-%',
@@ -348,41 +335,36 @@ SQL;
                                              ":gd6" => '%-' . $this->_search . '-%',
                                              ":gd7" => '%' . $this->_search
                                            ));
-    $oot = [];
-    foreach ($results as $nextResult) {
-      $str = $nextResult["m-hw"] . '|' . $nextResult["m-pos"] . '|'. $nextResult["m-sub"] . '|';
-      if ($nextResult["hw"]!=$nextResult["m-hw"]) { $str .= $nextResult["hw"]; }
-      $oot[] = $str;
+        $oot = [];
+        foreach ($results as $nextResult) {
+            $str = $nextResult["id"] . '|' . $nextResult["hw"] . '|'. $nextResult["pos"];
+            $oot[] = $str;
+        }
+        return $oot;
     }
-    return $oot;
-  }
-  */
 
-/*
-  private function _gaelicInfixHwSpaceRightSearch() {
-    $sql = <<<SQL
-    SELECT DISTINCT `m-hw`, `m-pos`, `m-sub`, `hw`
-      FROM `lexemes`
-      WHERE (`hw` LIKE :gd1 OR `hw` LIKE :gd2) AND `hw` NOT LIKE :gd3 AND `hw` NOT LIKE :gd4 AND `hw` NOT LIKE :gd5 AND `hw` NOT LIKE :gd6 AND `hw` NOT LIKE :gd7
-      ORDER BY LENGTH(`m-hw`), `m-hw`
+    private function _gaelicInfixHwSpaceRightSearch() {
+        $sql = <<<SQL
+SELECT id, hw, pos
+FROM entry
+WHERE (hw LIKE :gd1 OR hw LIKE :gd2) AND hw NOT LIKE :gd3 AND hw NOT LIKE :gd4 AND hw NOT LIKE :gd5 AND hw NOT LIKE :gd6 AND hw NOT LIKE :gd7
+ORDER BY LENGTH(hw), hw
 SQL;
-    $results = $this->_db->fetch($sql, array(":gd1" => '%' . $this->_search . ' %',
-                                             ":gd2" => '%' . $this->_search . '-%',
-                                             ":gd3" => '% ' . $this->_search . ' %',
-                                             ":gd4" => '% ' . $this->_search . '-%',
-                                             ":gd5" => '%-' . $this->_search . ' %',
-                                             ":gd6" => '%-' . $this->_search . '-%',
-                                             ":gd7" => $this->_search . '%'
+        $results = $this->_db->fetch($sql, array(":gd1" => '%' . $this->_search . ' %',
+                                                 ":gd2" => '%' . $this->_search . '-%',
+                                                 ":gd3" => '% ' . $this->_search . ' %',
+                                                 ":gd4" => '% ' . $this->_search . '-%',
+                                                 ":gd5" => '%-' . $this->_search . ' %',
+                                                 ":gd6" => '%-' . $this->_search . '-%',
+                                                 ":gd7" => $this->_search . '%'
                                            ));
-    $oot = [];
-    foreach ($results as $nextResult) {
-      $str = $nextResult["m-hw"] . '|' . $nextResult["m-pos"] . '|'. $nextResult["m-sub"] . '|';
-      if ($nextResult["hw"]!=$nextResult["m-hw"]) { $str .= $nextResult["hw"]; }
-      $oot[] = $str;
+        $oot = [];
+        foreach ($results as $nextResult) {
+            $str = $nextResult["id"] . '|' . $nextResult["hw"] . '|'. $nextResult["pos"] ;
+            $oot[] = $str;
+        }
+        return $oot;
     }
-    return $oot;
-  }
-  */
 
   // GETTERS
 
