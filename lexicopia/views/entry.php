@@ -15,13 +15,15 @@ class entry {
 		return $this->_writeInfo();
 	}
 
-  private function _writeInfo() {
-		$html = '<div class="modal-header">';
-		$html .= '<h2>' . $this->_model->getHw() . '</h2>';
-		$html .= '<em class="text-muted" data-toggle="tooltip" title="' . models\entry::getPosInfo($this->_model->getPos())[2] . '">' . models\entry::getPosInfo($this->_model->getPos())[1] . '</em>';
-		$html .= '</div>';
-		$html .= '<div class="modal-body">';
-		
+    private function _writeInfo() {
+        $reg = '<small>🏵️</small>';
+        if ($this->_model->getReg()==1) { $reg = '<small title="Paleo-Gaelic">👻</small>'; };
+        if ($this->_model->getReg()==2) { $reg = '<small title="Neo-Gaelic">🤖</small>'; };
+        $html = '<div class="modal-header">';
+        $html .= '<h2>' . $reg . ' ' . $this->_model->getHw() . '</h2>';
+        $html .= '<em class="text-muted" data-toggle="tooltip" title="' . models\entry::getPosInfo($this->_model->getPos())[2] . '">' . models\entry::getPosInfo($this->_model->getPos())[1] . '</em>';
+        $html .= '</div>';
+        $html .= '<div class="modal-body">';	
 		
 		/*
 		$ps = $this->_model->getParts();

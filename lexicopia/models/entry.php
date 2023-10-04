@@ -7,12 +7,10 @@ class entry {
     private $_id;
     private $_hw;
     private $_pos;
+    private $_reg;
     //private $_instances = array(); // an array of entry_instance models
     //private $_parts = array();
     //private $_compounds = array();
-    //private $_slips = array();
-    //private $_sense; // SENSE STRUCTURE, WITH CITATIONS
-	//private $_senseId = null;
     private $_db;   // an instance of models\database
 
 	public function __construct($id,$db) {
@@ -32,20 +30,17 @@ class entry {
         }
 	}
 
-  private function _load() {
+    private function _load() {
         $id = $this->_id;
-		//$mhw = $this->_mhw;
-		//$mpos = $this->_mpos;
-		//$msub = $this->_msub;
-    $sql = <<<SQL
-    	SELECT hw, pos
-    		FROM entry
-    		WHERE id = :id
+        $sql = <<<SQL
+SELECT hw, pos, reg
+FROM entry
+WHERE id = :id
 SQL;
-    $results = $this->_db->fetch($sql, array(":id" => $id));
-    $this->_hw = $results[0]["hw"];
-    $this->_pos = $results[0]["pos"];
-    
+        $results = $this->_db->fetch($sql, array(":id" => $id));
+        $this->_hw = $results[0]["hw"];
+        $this->_pos = $results[0]["pos"];
+        $this->_reg = $results[0]["reg"];
     //foreach ($results as $nextResult) {
       //$this->_instances[] = new entry_instance($nextResult["id"]);
     //}
@@ -100,15 +95,21 @@ SQL;
 	  $result = $this->_db->fetch($sql, array(":mhw" => $mhw, ":mpos" => $mpos, ":msub" => $msub));
 	  $this->_senseId = $result[0]["senseid"];
     */
- 	}
+    }
 
-  public function getHw() {
-    return $this->_hw;
+    // GETTERS
+  
+    public function getHw() {
+        return $this->_hw;
 	}
 
-  public function getPos() {
-    return $this->_pos;
-  }
+    public function getPos() {
+        return $this->_pos;
+    }
+  
+    public function getReg() {
+        return $this->_reg;
+    }
 
 
   public function getInstances() {
