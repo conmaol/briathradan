@@ -8,6 +8,7 @@ class entry {
     private $_hw;
     private $_pos;
     private $_reg;
+    private $_translations = array();
     //private $_instances = array(); // an array of entry_instance models
     //private $_parts = array();
     //private $_compounds = array();
@@ -41,10 +42,16 @@ SQL;
         $this->_hw = $results[0]["hw"];
         $this->_pos = $results[0]["pos"];
         $this->_reg = $results[0]["reg"];
-    //foreach ($results as $nextResult) {
-      //$this->_instances[] = new entry_instance($nextResult["id"]);
-    //}
-    
+        $sql = <<<SQL
+SELECT text
+FROM translation
+WHERE entryid = :id
+SQL;
+        $results = $this->_db->fetch($sql, array(":id" => $id));
+        foreach ($results as $nextResult) {
+            $this->_translations[] = $nextResult["text"];
+        }
+
     /*
     $sql = <<<SQL
     	SELECT `m-p-hw`, `m-p-pos`, `m-p-sub`
@@ -111,10 +118,9 @@ SQL;
         return $this->_reg;
     }
 
-
-  public function getInstances() {
-    return $this->_instances;
-  }
+    public function getTranslations() {
+        return $this->_translations;
+    }
 
   public function getParts() {
     return $this->_parts;
@@ -127,10 +133,10 @@ SQL;
   public static function getPosInfo($pos) {
     switch ($pos) {
       case "m":
-        return ['masc.', 'ainmear fireann', 'masculine noun'];
+        return ['masc.', 'masculine noun', 'masculine noun'];
         break;
       case "f":
-        return ['fem.', 'ainmear boireann', 'feminine noun'];
+        return ['fem.', 'feminine noun', 'feminine noun'];
         break;
       case "ff":
         return ['boir.', 'ainm boireann', 'feminine proper noun'];
@@ -142,10 +148,10 @@ SQL;
         return ['ainm.', 'ainmear (fireann/boireann)', 'noun (masculine/feminine)'];
         break;
       case "v":
-        return ['vb.', 'gnìomhair', 'verb'];
+        return ['vb.', 'verb', 'verb'];
         break;
       case "a":
-        return ['adj.', 'buadhair', 'adjective'];
+        return ['adj.', 'adjective', 'adjective'];
         break;
       case "p":
         return ['roi.', 'roimhear', 'preposition'];

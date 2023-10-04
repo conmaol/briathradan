@@ -16,15 +16,22 @@ class entry {
 	}
 
     private function _writeInfo() {
-        $reg = '<small>🏵️</small>';
+        $reg = '<small title="Trad-Gaelic">🏵️</small>';
         if ($this->_model->getReg()==1) { $reg = '<small title="Paleo-Gaelic">👻</small>'; };
         if ($this->_model->getReg()==2) { $reg = '<small title="Neo-Gaelic">🤖</small>'; };
         $html = '<div class="modal-header">';
         $html .= '<h2>' . $reg . ' ' . $this->_model->getHw() . '</h2>';
-        $html .= '<em class="text-muted" data-toggle="tooltip" title="' . models\entry::getPosInfo($this->_model->getPos())[2] . '">' . models\entry::getPosInfo($this->_model->getPos())[1] . '</em>';
+        $html .= '<em class="text-muted">' . models\entry::getPosInfo($this->_model->getPos())[1] . '</em>';
         $html .= '</div>';
-        $html .= '<div class="modal-body">';	
-		
+        $html .= '<div class="modal-body">';
+        $html .= '<p>';	
+        $translations = $this->_model->getTranslations();
+        foreach ($translations as $nextTranslation) {
+            $html .= '<mark>' . $nextTranslation . '</mark>';
+            if ($nextTranslation!=end($translations)) { $html .= ' | '; }
+        }
+        $html .= '</p>';
+        
 		/*
 		$ps = $this->_model->getParts();
     if ($ps) {
@@ -97,11 +104,12 @@ HTML;
   $html .= $this->_model->getSenseInfo();
     */
 	$html .= '</div>';
-    $html .= <<<HTML
+	
+    /*$html .= <<<HTML
 		<div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">dùin</button>
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">bye</button>
 		</div>
-HTML;
+HTML;*/
 		return $html;
 	}
 }
