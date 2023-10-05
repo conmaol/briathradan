@@ -9,9 +9,8 @@ class entry {
     private $_pos;
     private $_reg;
     private $_translations = array();
-    //private $_instances = array(); // an array of entry_instance models
-    //private $_parts = array();
-    //private $_compounds = array();
+    private $_parts = array();
+    private $_compounds = array();
     private $_db;   // an instance of models\database
 
 	public function __construct($id,$db) {
@@ -51,60 +50,34 @@ SQL;
         foreach ($results as $nextResult) {
             $this->_translations[] = $nextResult["text"];
         }
-
-    /*
-    $sql = <<<SQL
-    	SELECT `m-p-hw`, `m-p-pos`, `m-p-sub`
-    		FROM `parts`
-    		WHERE `m-hw` = :mhw
-    		AND `m-pos` =  :mpos
-    		AND `m-sub` =  :msub
+        $sql = <<<SQL
+SELECT r.partid, e.hw, e.pos
+FROM relations r
+INNER JOIN entry e ON r.partid = e.id
+WHERE r.wholeid = :id
 SQL;
-    $results = $this->_db->fetch($sql, array(":mhw" => $mhw, ":mpos" => $mpos, ":msub" => $msub));
-    foreach ($results as $nextResult) {
-      $this->_parts[] = [$nextResult["m-p-hw"], $nextResult["m-p-pos"], $nextResult["m-p-sub"]];
-    }
-    $sql = <<<SQL
-    	SELECT `m-hw`, `m-pos`, `m-sub`
-    		FROM `parts`
-    		WHERE `m-p-hw` = :mhw
-    		AND `m-p-pos` = :mpos
-    		AND `m-p-sub` = :msub
-        ORDER BY LENGTH(`m-hw`)
+        $results = $this->_db->fetch($sql, array(":id" => $id));
+        foreach ($results as $nextResult) {
+            $this->_parts[] = [$nextResult["partid"],$nextResult["hw"],$nextResult["pos"]];
+        }
+        $sql = <<<SQL
+SELECT r.wholeid, e.hw, e.pos
+FROM relations r
+INNER JOIN entry e ON r.wholeid = e.id
+WHERE r.partid = :id
+ORDER BY LENGTH(e.hw)
 SQL;
-    $results = $this->_db->fetch($sql, array(":mhw" => $mhw, ":mpos" => $mpos, ":msub" => $msub));
-    foreach ($results as $nextResult) {
-    	$this->_compounds[] = [$nextResult["m-hw"], $nextResult["m-pos"], $nextResult["m-sub"]];
-    }
-    */
-    
-    
-    /*
-    $sql = <<<SQL
-			SELECT `id`, `slipref`
-				FROM `slips`
-				WHERE `mhw` = :mhw
-				AND `mpos` = :mpos
-				AND `msub` = :msub
-				ORDER BY slipref
-SQL;
-		$results = $this->_db->fetch($sql, array(":mhw" => $mhw, ":mpos" => $mpos, ":msub" => $msub));
-		foreach ($results as $nextResult) {
-			$this->_slips[$nextResult["id"]] = $nextResult["slipref"];
-		}
-	  $sql = <<<SQL
-			SELECT `senseid`
-				FROM `senses`
-				WHERE `mhw` = :mhw
-				AND `mpos` = :mpos
-				AND `msub` = :msub
-SQL;
-	  $result = $this->_db->fetch($sql, array(":mhw" => $mhw, ":mpos" => $mpos, ":msub" => $msub));
-	  $this->_senseId = $result[0]["senseid"];
-    */
+        $results = $this->_db->fetch($sql, array(":id" => $id));
+        foreach ($results as $nextResult) {
+    	    $this->_compounds[] = [$nextResult["wholeid"], $nextResult["hw"], $nextResult["pos"]];
+        }
     }
 
     // GETTERS
+
+    public function getId() {
+        return $this->_id;
+	}
   
     public function getHw() {
         return $this->_hw;
@@ -113,7 +86,7 @@ SQL;
     public function getPos() {
         return $this->_pos;
     }
-  
+
     public function getReg() {
         return $this->_reg;
     }
@@ -122,9 +95,9 @@ SQL;
         return $this->_translations;
     }
 
-  public function getParts() {
-    return $this->_parts;
-  }
+    public function getParts() {
+        return $this->_parts;
+    }
 
   public function getCompounds() {
     return $this->_compounds;
