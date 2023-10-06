@@ -8,6 +8,7 @@ class entry {
     private $_hw;
     private $_pos;
     private $_reg;
+    private $_forms = array();
     private $_translations = array();
     private $_parts = array();
     private $_compounds = array();
@@ -71,6 +72,16 @@ SQL;
         foreach ($results as $nextResult) {
     	    $this->_compounds[] = [$nextResult["wholeid"], $nextResult["hw"], $nextResult["pos"]];
         }
+        $sql = <<<SQL
+SELECT form, morph, id
+FROM forms
+WHERE `lexeme_id` = :id
+SQL;
+        $results = $this->_db->fetch($sql, array(":id" => $id));
+        foreach ($results as $nextResult) {
+            $this->_forms[] = [$nextResult["form"], $nextResult["morph"], $nextResult["id"]];
+        }
+
     }
 
     // GETTERS
@@ -89,6 +100,10 @@ SQL;
 
     public function getReg() {
         return $this->_reg;
+    }
+
+    public function getForms() {
+        return $this->_forms;
     }
 
     public function getTranslations() {
@@ -130,10 +145,10 @@ SQL;
         return ['roi.', 'roimhear', 'preposition'];
         break;
       case "pl":
-        return ['iol.', 'iolra', 'plural'];
+        return ['plur.', 'plural', 'plural'];
         break;
       case "gen":
-        return ['gin.', 'ginideach', 'genitive'];
+        return ['gen.', 'genitive', 'genitive'];
         break;
       case "comp":
         return ['coim.', 'coimeasach', 'comparative'];

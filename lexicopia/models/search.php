@@ -6,7 +6,7 @@ class search {
 
     private $_search = ""; // the search term
     private $_entriesEN = array(); // an array of id-hw-pos-en 4-tuples
-    private $_entriesGD = array(); // an array of id-hw-pos 3-tuples ???
+    private $_entriesGD = array(); // an array of id-hw-pos 3-5-tuples
     private $_db;   // an instance of models\database
 
     public function __construct() {
@@ -41,10 +41,7 @@ class search {
   	  }
         $results = [];
         $results = $this->_gaelicExactHwSearch();
-    
-    /*
-    $results = array_merge($results,$this->_gaelicExactFormSearch());
-    */
+        $results = array_merge($results,$this->_gaelicExactFormSearch());
         $results = array_merge($results,$this->_gaelicPrefixHwSpaceSearch());
         $results = array_merge($results,$this->_gaelicSuffixHwSpaceSearch()); // lenited ??
         $results = array_merge($results,$this->_gaelicInfixHwSpaceBothSearch());
@@ -211,23 +208,20 @@ SQL;
         return $oot;
     }
 
-/*
-  private function _gaelicExactFormSearch() {
-    $sql = <<<SQL
-    SELECT DISTINCT `m-hw`, `m-pos`, `m-sub`, f.`form`, f.`morph`
-      FROM `lexemes` l
-      JOIN `forms` f ON l.`id` = f.`lexeme_id`
-      WHERE f.`form` = :gd
-      ORDER BY `m-hw`
+    private function _gaelicExactFormSearch() {
+        $sql = <<<SQL
+SELECT e.id, e.hw, e.pos, f.form, f.morph
+FROM entry e
+JOIN forms f ON e.id = f.`lexeme_id`
+WHERE f.form = :gd
 SQL;
-    $results = $this->_db->fetch($sql, array(":gd" => $this->_search));
-    $oot = [];
-    foreach ($results as $nextResult) {
-      $oot[] = $nextResult["m-hw"] . '|' . $nextResult["m-pos"] . '|'. $nextResult["m-sub"] . '|' . $nextResult["form"] . ' <em>' . $nextResult["morph"] . '</em>';
+        $results = $this->_db->fetch($sql, array(":gd" => $this->_search));
+        $oot = [];
+        foreach ($results as $nextResult) {
+            $oot[] = $nextResult["id"] . '|' . $nextResult["hw"] . '|'. $nextResult["pos"] . '|' . $nextResult["form"] /* . ' <em>' . $nextResult["morph"] . '</em>'*/;
+        }
+        return $oot;
     }
-    return $oot;
-  }
-*/
 
     private function _gaelicPrefixHwSpaceSearch() {
         $sql = <<<SQL

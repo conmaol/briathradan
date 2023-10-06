@@ -16,7 +16,7 @@ class entry {
     }
 
     private function _writeInfo() {
-        $reg = '<small title="Trad-Gaelic">🏵️</small>';
+        $reg = '';
         if ($this->_model->getReg()==1) { $reg = '<small title="Paleo-Gaelic">👻</small>'; };
         if ($this->_model->getReg()==2) { $reg = '<small title="Neo-Gaelic">🤖</small>'; };
         $html = '<div class="modal-header">';
@@ -24,6 +24,13 @@ class entry {
         $html .= '<em class="text-muted">' . models\entry::getPosInfo($this->_model->getPos())[1] . '</em>';
         $html .= '</div>';
         $html .= '<div class="modal-body">';
+        if ($this->_model->getForms()) {
+            $html .= '<p>';
+	  foreach ($this->_model->getForms() as $nextForm) {
+	      $html .= '<em class="text-muted" title="' . models\entry::getPosInfo($nextForm[1])[2] . '">' . models\entry::getPosInfo($nextForm[1])[0] . '</em> ' . $nextForm[0] . ' ';
+	  }
+	  $html .= '</p>';
+        }
         $ps = $this->_model->getParts();
         if ($ps) {
             $html .= '<p>↗️ ';
@@ -36,6 +43,7 @@ HTML;
 	  }
             $html .= '</p>';
         }
+        
         $html .= '<p>';	
         $translations = $this->_model->getTranslations();
         foreach ($translations as $nextTranslation) {

@@ -67,7 +67,7 @@ HTML;
 HTML;
                     echo search::_hi($nextEntry[1],$search);
 	                echo '</strong> <em>' . models\entry::getPosInfo($nextEntry[2])[0] . '</em>';
-	                //echo ' <span class="text-muted">' . search::_hi($nextEntry[3],$search) . '</span></a>';
+	                if (count($nextEntry)>3) { echo ' <span class="text-muted">' . search::_hi($nextEntry[3],$search) . '</span></a>'; }
 	                echo '</a>';
                 }
 			}
@@ -80,7 +80,7 @@ HTML;
 HTML;
                     echo search::_hi($nextEntry[1],$search);
 	                echo '</strong> <em>' . models\entry::getPosInfo($nextEntry[2])[0] . '</em>';
-	                //echo ' <span class="text-muted">' . search::_hi($nextEntry[3],$search) . '</span></a>';
+	                if (count($nextEntry)>3) { echo ' <span class="text-muted">' . search::_hi($nextEntry[3],$search) . '</span></a>'; }
 	                echo '</a>';
                 }
 			}	
